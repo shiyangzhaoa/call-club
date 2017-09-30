@@ -36,13 +36,13 @@ const findTopicById = topic_id => {
   });
 };
 
-const markOne = msg_id => {
+const markOneMessage = (query) => {
   return new Promise((resolve, reject) => {
-    Message.update({ _id: msg_id }, {
+    Message.update(query, {
       '$set': {
         'has_read': true
       }
-    }, (err, result) => {
+    }, {  multi: true  }, (err, result) => {
       if (err) reject(err);
 
       resolve(result);
@@ -99,7 +99,7 @@ const messageCtrl = {
   async markOne(ctx) {
     const { msg_id } = ctx.params;
     try {
-      const markResult = await markOne(msg_id);
+      const markResult = await markOneMessage({ _id: msg_id });
       if (markResult.ok) {
         ctx.status = 200;
         ctx.body = {
@@ -107,7 +107,7 @@ const messageCtrl = {
           message: '已阅',
         }
       } else {
-        throw new Error('更新失败');
+        throw new Error('标记失败');
       }
     } catch (e) {
       throw new Error(e);
@@ -115,7 +115,36 @@ const messageCtrl = {
   },
 
   async markAll(ctx) {
-    console.log('收到');
+    const author_id = ctx.api_user.id;
+    const query = {
+      '$or': [
+        { 'reply_id': ObjectId(author_id) },
+        { 'author_id': ObjectId(author_id) },
+      ],
+    }
+    try {
+      const messages = await findMessage(query);
+      const msg_ids = messages.map(item => {
+        return item._id;
+      })
+      const updateQuery = {
+        '_id': {
+          '$in': msg_ids
+        }
+      }
+      const result = await markOneMessage(updateQuery);
+      if (result.ok) {
+        ctx.status = 200;
+        ctx.body = {
+          success: true,
+          message: '标记全部已阅成功',
+        }
+      } else {
+        throw new Error('标记全部失败');
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 };
 

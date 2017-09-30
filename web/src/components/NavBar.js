@@ -70,6 +70,7 @@ class NavBar extends Component {
         break;
       case 'message':
         this.props.history.push("/message");
+        break;
       default:
         return false;
     }
@@ -110,7 +111,7 @@ class NavBar extends Component {
                 <Icon type="notification" />
                 <span>消息</span>
                 {
-                  count && 
+                  !!count && 
                   <span style={{ display: 'inline-block', padding: "3px 8px", backgroundColor: "#A9BBDC", marginLeft: '40px', lineHeight: '9px', borderRadius: '30px' }}>{count}</span>
                 }
               </Menu.Item>

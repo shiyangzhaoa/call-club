@@ -46,6 +46,9 @@ import {
   MARK_ONE_MESSAGE_REQUEST,
   MARK_ONE_MESSAGE_SUCCESS,
   MARK_ONE_MESSAGE_FAILED,
+  MARK_ALL_MESSAGE_REQUEST,
+  MARK_ALL_MESSAGE_SUCCESS,
+  MARK_ALL_MESSAGE_FAILED,
 } from './../apis';
 
 const url = '/api';
@@ -463,12 +466,12 @@ export const getMessages = () => (dispatch) => {
 //标记一条信息为已读
 export const markOne = (msg_id) => (dispatch) => {
   dispatch({
-    type: UP_REPLY_REQUEST,
+    type: MARK_ONE_MESSAGE_REQUEST,
     status: 'pending',
   })
   axios.post(`${url}/message/mark_one/${msg_id}`).then(({ data }) => {
     dispatch({
-      type: MARK_ONE_MESSAGE_REQUEST,
+      type: MARK_ONE_MESSAGE_SUCCESS,
       status: 'succ',
       data,
     })
@@ -481,6 +484,33 @@ export const markOne = (msg_id) => (dispatch) => {
     } else {
       dispatch({
         type: MARK_ONE_MESSAGE_FAILED,
+        status: 'netErr',
+      })
+    }
+  })
+}
+
+//标记全部信息为已读
+export const markAll = () => (dispatch) => {
+  dispatch({
+    type: MARK_ALL_MESSAGE_REQUEST,
+    status: 'pending',
+  })
+  axios.post(`${url}/message/mark_all`).then(({ data }) => {
+    dispatch({
+      type: MARK_ALL_MESSAGE_SUCCESS,
+      status: 'succ',
+      data,
+    })
+  }).catch(err => {
+    if (err.response) {
+      dispatch({
+        type: MARK_ALL_MESSAGE_FAILED,
+        status: 'timeOut',
+      })
+    } else {
+      dispatch({
+        type: MARK_ALL_MESSAGE_FAILED,
         status: 'netErr',
       })
     }

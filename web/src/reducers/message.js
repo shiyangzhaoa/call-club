@@ -8,6 +8,9 @@ import {
   MARK_ONE_MESSAGE_REQUEST,
   MARK_ONE_MESSAGE_SUCCESS,
   MARK_ONE_MESSAGE_FAILED,
+  MARK_ALL_MESSAGE_REQUEST,
+  MARK_ALL_MESSAGE_SUCCESS,
+  MARK_ALL_MESSAGE_FAILED,
 } from './../apis';
 
 const initState = {
@@ -17,6 +20,7 @@ const initState = {
   messages: null,
   markOneStatus: '',
   markResult: '',
+  markAllStatus: '',
 };
 
 export default function commitComment(state=initState, action) {
@@ -33,6 +37,10 @@ export default function commitComment(state=initState, action) {
     case MARK_ONE_MESSAGE_SUCCESS:
     case MARK_ONE_MESSAGE_FAILED:
       return Object.assign({}, state, { markOneStatus: action.status, markResult: action.data });
+    case  MARK_ALL_MESSAGE_REQUEST:
+    case  MARK_ALL_MESSAGE_SUCCESS:
+    case  MARK_ALL_MESSAGE_FAILED:
+      return Object.assign({}, state, { markAllStatus: action.status, markResult: action.data });
     default:
       return state;
   }

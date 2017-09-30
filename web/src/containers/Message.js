@@ -12,6 +12,12 @@ import * as actions from './../actions';
 import './message.scss';
 
 class Message extends Component {
+  componentWillReceiveProps(nextProps) {
+    const { actions, markAllStatus } = this.props;
+    if (nextProps.markAllStatus !== markAllStatus && nextProps.markAllStatus === 'succ') {
+      actions.getMessages();
+    }
+  }
   componentDidMount() {
     const { actions } = this.props;
     actions.getMessages();
@@ -21,6 +27,10 @@ class Message extends Component {
     msg_id && actions.markOne(msg_id);
     this.props.history.push(`/topics/${topic_id}`);
   }
+  markAll = () => {
+    const { actions } = this.props;
+    actions.markAll();
+  }
   render() {
     const has_read_messages = this.props.messages && this.props.messages.data.has_read_messages;
     const has_not_read_messages = this.props.messages && this.props.messages.data.has_not_read_messages;
@@ -28,7 +38,7 @@ class Message extends Component {
       <NavBar>
         <div className="message-page">
           <div>
-            <Button className="mark-btn" type="primary" size="large">标记全部为已读</Button>
+            <Button className="mark-btn" type="primary" size="large" onClick={this.markAll}>标记全部为已读</Button>
           </div>
           <Card className="info-card" noHovering='false' title="未读的消息">
             <ul>
@@ -83,6 +93,7 @@ function mapStateToProps(state) {
     getMessageStatus: state.message.getMessageStatus,
     messages: state.message.messages,
     markOneStatus: state.message.markOneStatus,
+    markAllStatus: state.message.markAllStatus,
     markResult: state.message.markResult,
   };
   return props;
