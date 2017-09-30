@@ -1,0 +1,18 @@
+.login-page {
+  display: flex;
+  padding: 30px 100px;
+  margin: 20px 100px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.login-form {
+  flex: 1;
+  margin-left: 20px;
+
+  .form-ctrl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

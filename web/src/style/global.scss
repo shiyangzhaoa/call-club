@@ -1,0 +1,38 @@
+body {
+  background-color: #e1e1e1;
+}
+
+.rdw-editor-wrapper {
+  border: 2px solid #eee;
+  width: 75%;
+  min-width: 600px;
+  margin: 0 auto;
+  padding: 10px 10px;
+  border-radius: 6px;
+}
+
+.rdw-editor-main {
+  height: 300px !important;
+}
+
+.ql-container {
+  min-height: 30em;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  background: #fefcfc;
+}
+
+.ql-toolbar {
+  background: #eaecec;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+a {
+  color: #333;
+
+  &:hover {
+    color: #333;
+    text-decoration: underline;
+  }
+}

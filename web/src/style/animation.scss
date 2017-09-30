@@ -1,0 +1,17 @@
+.topic-enter {
+  opacity: 0.01;
+}
+
+.topic-enter.topic-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.topic-leave {
+  opacity: 1;
+}
+
+.topic-leave.topic-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

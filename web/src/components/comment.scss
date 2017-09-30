@@ -1,0 +1,31 @@
+.comment-item {
+  display: flex;
+  padding: 10px;
+  font-size: 14px;
+  
+  &:not(:last-child) {
+    border-bottom: 1px solid #e1e1e1;
+  }
+
+  .reply-avatar {
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+  }
+
+  .reply-body {
+    flex: 1;
+
+    .reply-head {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .reply-name {
+      color: #666;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 10px;
+    }
+  }
+}

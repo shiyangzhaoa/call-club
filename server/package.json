@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "8.4.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "koa2"
+  ],
+  "author": "yangzhao",
+  "license": "ISC",
+  "dependencies": {
+    "gravatar": "^1.6.0",
+    "jsonwebtoken": "^8.0.0",
+    "koa": "^2.3.0",
+    "koa-body": "^2.3.0",
+    "koa-cors2": "0.0.1",
+    "koa-logger": "^3.0.1",
+    "koa-router": "^7.2.1",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.11.10",
+    "qiniu": "^7.0.8"
+  }
+}

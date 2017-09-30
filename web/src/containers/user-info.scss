@@ -1,0 +1,55 @@
+.user-info {
+
+  .info-card {
+    margin-bottom: 20px;
+
+    .info-value {
+      font-size: 17px;
+      color: #333;
+    }
+
+    .info-signature {
+      font-style: oblique;
+    }
+
+    .user-topic-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 15px;
+
+      &:last-child{
+        border: 0;
+      }
+    }
+
+    .topic-title {
+      font-size: 14px;
+    }
+
+    .topic-count {
+      font-size: 12px;
+      color: #bbb;
+    }
+  }
+
+  .info-topic {
+
+    .ant-card-wider-padding .ant-card-body {
+      padding: 0;
+    }
+
+    .ant-card-body {
+      padding: 0;
+    }
+  }
+
+  .ant-card-head {
+    background: #eaecec;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+  }
+  
+  .ant-card-bordered {
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+  }
+}

@@ -1,0 +1,27 @@
+const router = require('koa-router')();
+const topicController = require('./../controllers/topic_controller');
+const userController = require('./../controllers/user_controller');
+const commentController = require('./../controllers/comment_controller');
+const messageController = require('./../controllers/message_controller');
+const resolveToken = require('./../middleware/token');
+const shouldAuth = require('./../middleware/shouldAuth');
+
+
+const routers = router
+  .get('/topics', topicController.getTopics)
+  .get('/topics/:id', shouldAuth, topicController.getTopicDetail)
+  .get('/topic/no_reply', topicController.getNoReply)
+  .post('/topic/create', resolveToken, topicController.create)
+  .post('/topic/:topic_id/replies', resolveToken, commentController.create)
+  .post('/reply/:reply_id/ups', resolveToken, commentController.upReply)
+  .post('/topic/topic_collect/collect', resolveToken, topicController.collect)
+  .post('/topic_collect/de_collect', resolveToken, topicController.cancelCollect)
+  .post('/user/login', userController.login)
+  .post('/user/register', userController.createUser)
+  .get('/user-info/:loginname', userController.getInfo)
+  .get('/user/auth', resolveToken, userController.getAuth)
+  .get('/message/count', resolveToken, messageController.getCount)
+  .get('/messages', resolveToken, messageController.getMessages)
+  .post('/message/mark_one/:msg_id', resolveToken, messageController.markOne);
+
+module.exports = routers;
