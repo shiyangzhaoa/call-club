@@ -66,6 +66,17 @@
   .reply-btn {
     margin-top: 10px;
   }
+
+  .no-reply-item {
+    margin: 20px 0;
+
+    .ant-card-body {
+      padding: 0;
+    }
+  }
+  .ant-card-head {
+    background: #B5CAC6;
+  }
 }
 
 .detail-page {
@@ -80,5 +91,9 @@
 
   a {
     color: #108ee9;
+  }
+  
+  .ant-card-head-title {
+    width: 100%;
   }
 }

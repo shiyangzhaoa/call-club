@@ -6,7 +6,7 @@ import './topic-item.scss';
 
 const TopicItem = (props) => {
   const style = {
-    color: props.info.top || props.info.good ? '#108ee9' : '#999'
+    color: props.info.top || props.info.good ? '#108ee9' : '#4c4648'
   }
   return (
   <div className="topic-item">

@@ -267,7 +267,7 @@ class TopicDetail extends Component {
                 )
               }
             </Card>
-            <Card title="无人回复的话题" className="topic-item" style={{ margin: '20px 0' }} noHovering='false'>
+            <Card title="无人回复的话题" className="no-reply-item" noHovering='false'>
               {
                 noReplyStatus === 'pending' ?
                   <div>正在加载</div>
