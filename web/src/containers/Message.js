@@ -5,7 +5,7 @@ import React, {
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Card } from 'antd';
+import { Card, Button } from 'antd';
 
 import NavBar from './../components/NavBar';
 import * as actions from './../actions';
@@ -27,6 +27,9 @@ class Message extends Component {
     return (
       <NavBar>
         <div className="message-page">
+          <div>
+            <Button className="mark-btn" type="primary" size="large">标记全部为已读</Button>
+          </div>
           <Card className="info-card" noHovering='false' title="未读的消息">
             <ul>
               {has_not_read_messages ?

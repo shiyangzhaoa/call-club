@@ -112,6 +112,10 @@ const messageCtrl = {
     } catch (e) {
       throw new Error(e);
     }
+  },
+
+  async markAll(ctx) {
+    console.log('收到');
   }
 };
 

@@ -22,6 +22,7 @@ const routers = router
   .get('/user/auth', resolveToken, userController.getAuth)
   .get('/message/count', resolveToken, messageController.getCount)
   .get('/messages', resolveToken, messageController.getMessages)
-  .post('/message/mark_one/:msg_id', resolveToken, messageController.markOne);
+  .post('/message/mark_one/:msg_id', resolveToken, messageController.markOne)
+  .post('/message/mark_all', resolveToken, messageController.markAll);
 
 module.exports = routers;
