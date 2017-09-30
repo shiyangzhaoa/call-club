@@ -8,7 +8,7 @@ const ObjectId = mongoose.Types.ObjectId;
 
 const getMessageCount = (query) => {
   return new Promise((resolve, reject) => {
-    Message.count(query, (err, count) => {
+    Message.find(query, (err, count) => {
       if (err) reject(err);
 
       resolve(count);
@@ -22,7 +22,7 @@ const findMessage = (query) => {
       if(err) reject(err);
 
       resolve(result);
-    }).sort({ create_at: -1 });
+    }).sort({ create_at: -1 }).count();
   });
 };
 
@@ -52,12 +52,19 @@ const markOneMessage = (query) => {
 
 const messageCtrl = {
   async getCount(ctx) {
-    const author_id = ctx.api_user.id;
+    const ropic_author_id = ctx.api_user.id;
+    const query = {
+      '$or': [
+        { 'reply_id': ObjectId(ropic_author_id) },
+        { 'topic_author_id': ObjectId(ropic_author_id), 'reply_id': null },
+      ],
+      'has_read': false,
+    }
     try {
-      const countResult = await getMessageCount({ author_id, has_read: false });
+      const countResult = await findMessage(query);
       ctx.status = 200;
       ctx.body = {
-        count: countResult
+        count: countResult.length
       };
     } catch (e) {
       throw new Error(e);
@@ -69,7 +76,7 @@ const messageCtrl = {
     const query = {
       '$or': [
         { 'reply_id': ObjectId(author_id) },
-        { 'author_id': ObjectId(author_id) },
+        { 'topic_author_id': ObjectId(author_id), 'reply_id': null  },
       ],
     }
     try {
