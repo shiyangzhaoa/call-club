@@ -14,7 +14,7 @@ const SubMenu = Menu.SubMenu;
 
 class NavBar extends Component {
   state = {
-    collapsed: false,
+    collapsed: true,
     hasLogin: false,
   }
   componentDidMount() {
