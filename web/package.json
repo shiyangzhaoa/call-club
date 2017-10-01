@@ -97,12 +97,14 @@
   "babel": {
     "presets": [
       "react-app"
-    ]
+    ],
+    "plugins": [["import", { "libraryName": "antd", "style": "css" }]]
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.6.0",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6"
   }
