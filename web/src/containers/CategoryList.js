@@ -122,7 +122,7 @@ class CategoryList extends Component {
   }
 }
 CategoryList.propTypes = {
-  topics: PropTypes.array,
+  topics: PropTypes.object,
   getTopicStatus: PropTypes.string,
   limit: PropTypes.number,
 }
