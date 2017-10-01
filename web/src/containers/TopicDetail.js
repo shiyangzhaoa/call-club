@@ -276,7 +276,7 @@ class TopicDetail extends Component {
                     noReplyTopic.map(item => (
                       <div className="no-reply-topic" key={item.id}><Link to={`/topics/${item.id}`}>{item.title}</Link></div>
                     ))
-                    : <div>没有相应的话题</div>)
+                    : <div className="no-reply-topic">没有相应的话题</div>)
               }
             </Card>
           </div>
