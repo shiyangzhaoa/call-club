@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Form, Input, Button, Select } from 'antd';
-import axios from 'axios';
+//import axios from 'axios';
 import ReactQuill from 'react-quill';
 
 import * as actions from './../actions';
@@ -38,6 +39,7 @@ const formats = [
   'link', 'image', 'code-block', 'formula', 'video'
 ]
 
+/**
 function uploadImageCallBack(file) {
   console.log(file);
   var formdata = new FormData();
@@ -46,6 +48,7 @@ function uploadImageCallBack(file) {
     console.log(data);
   })
 }
+*/
 
 class CreateTopic extends Component {
   state = {
@@ -133,7 +136,10 @@ class CreateTopic extends Component {
   }
 }
 CreateTopic.propTypes = {
-  actions: PropTypes.shape({})
+  actions: PropTypes.shape({
+    createTopic: PropTypes.func,
+  }),
+  createTopicStatus: PropTypes.string,
 };
 
 const CreateTopicCom = Form.create()(CreateTopic);

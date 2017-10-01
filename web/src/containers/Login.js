@@ -1,6 +1,5 @@
-import React, {
-  PropTypes
-} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -101,7 +100,10 @@ class Login extends React.Component {
  *       adjust it here.
  */
 Login.propTypes = {
-  actions: PropTypes.shape({})
+  actions: PropTypes.shape({
+    login: PropTypes.func,
+  }),
+  loginStatus: PropTypes.string,
 };
 
 const LoginForm = Form.create()(Login);

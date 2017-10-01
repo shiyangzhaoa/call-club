@@ -1,7 +1,7 @@
 import React, {
   Component,
-  PropTypes
 } from 'react';
+import PropTypes from 'prop-types';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
@@ -174,7 +174,13 @@ class NavBar extends Component {
 }
 
 NavBar.propTypes = {
-  actions: PropTypes.shape({})
+  actions: PropTypes.shape({
+    getMessageCount: PropTypes.func,
+    auth: PropTypes.func,
+  }),
+  auth: PropTypes.object,
+  messageCountStatus: PropTypes.string,
+  count: PropTypes.number,
 };
 function mapStateToProps(state) {
   const props = {

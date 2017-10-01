@@ -1,7 +1,7 @@
 import React, {
   Component,
-  PropTypes
 } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -286,7 +286,28 @@ class TopicDetail extends Component {
   }
 }
 TopicDetail.propTypes = {
-  actions: PropTypes.shape({})
+  actions: PropTypes.shape({
+    getUserInfo: PropTypes.func,
+    getTopicDetail: PropTypes.func,
+    noReply: PropTypes.func,
+    auth: PropTypes.func,
+    commitComment: PropTypes.func,
+    cancelCollect: PropTypes.func,
+    collect: PropTypes.func,
+    upReply: PropTypes.func,
+  }),
+  topic_detail: PropTypes.object,
+  getTopicDetailStatus: PropTypes.string,
+  collectStatus: PropTypes.string,
+  cancelStatus: PropTypes.string,
+  noReplyStatus: PropTypes.string,
+  upStatus: PropTypes.string,
+  getInfoStatus: PropTypes.string,
+  commitStatus: PropTypes.string,
+  status: PropTypes.string,
+  upAction: PropTypes.string,
+  info: PropTypes.object,
+  auth: PropTypes.object,
 };
 
 function mapStateToProps(state) {

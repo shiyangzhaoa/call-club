@@ -1,7 +1,7 @@
 import React, {
   Component,
-  PropTypes
 } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -85,7 +85,16 @@ class Message extends Component {
 }
 
 Message.propTypes = {
-  actions: PropTypes.shape({})
+  actions: PropTypes.shape({
+    getMessages: PropTypes.func,
+    markOne: PropTypes.func,
+    markAll: PropTypes.func,
+  }),
+  getMessageStatus: PropTypes.string,
+  messages: PropTypes.object,
+  markOneStatus: PropTypes.string,
+  markAllStatus: PropTypes.string,
+  markResult: PropTypes.string,
 };
 
 function mapStateToProps(state) {

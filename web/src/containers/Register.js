@@ -1,6 +1,7 @@
 import React, {
-  PropTypes
+  Component
 } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -22,7 +23,7 @@ const steps = [
   { title: '拯救人类', finshed: false },
 ]
 
-class Register extends React.Component {
+class Register extends Component {
   componentWillReceiveProps(nextprops) {
     if (this.props.registerStatus !== nextprops.registerStatus && nextprops.registerStatus === 'succ') {
       this.props.history.push("/");
@@ -220,7 +221,10 @@ class Register extends React.Component {
 }
 
 Register.propTypes = {
-  actions: PropTypes.shape({})
+  actions: PropTypes.shape({
+    register: PropTypes.func,
+  }),
+  registerStatus: PropTypes.string,
 };
 
 const WrappedRegistrationForm = Form.create()(Register);

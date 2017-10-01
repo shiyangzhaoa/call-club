@@ -1,7 +1,7 @@
 import React, {
   Component,
-  PropTypes
 } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -109,7 +109,11 @@ class UserInfo extends Component {
 }
 
 UserInfo.propTypes = {
-  actions: PropTypes.shape({})
+  actions: PropTypes.shape({
+    getUserInfo: PropTypes.func,
+  }),
+  getInfoStatus: PropTypes.oneOf([ '', 'pending', 'succ', 'NoData', 'netErr' ]),
+  info: PropTypes.object,
 };
 
 function mapStateToProps(state) {

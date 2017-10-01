@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -119,6 +120,11 @@ class CategoryList extends Component {
       return (<div>出错</div>)
     }
   }
+}
+CategoryList.propTypes = {
+  topics: PropTypes.array,
+  getTopicStatus: PropTypes.string,
+  limit: PropTypes.number,
 }
 
 function mapStateToProps(state) {
