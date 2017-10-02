@@ -59,6 +59,16 @@ const updateOne = (newReply) => {
   })
 }
 
+const removeReply = (query) => {
+  return new Promise((resolve, reject) => {
+    Comment.remove(query, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  });
+}
+
 const createMessage = (body) => {
   return new Promise((resolve, reject) => {
     const newMessage = new Message(body);
@@ -136,7 +146,18 @@ const commentCtrl = {
 
   async deleteReply(ctx) {
     const { reply_id } = ctx.params;
-    console.log(`收到${reply_id}`);
+    try {
+      const removeResult = await removeReply({ _id: reply_id });
+      if (removeResult.result.ok) {
+        ctx.status = 200;
+        ctx.body = {
+          success: true,
+          message: '删除成功',
+        };
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
   },
 };
 

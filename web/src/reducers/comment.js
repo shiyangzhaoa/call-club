@@ -5,12 +5,16 @@ import {
   UP_REPLY_REQUEST,
   UP_REPLY_SUCCESS,
   UP_REPLY_FAILD,
+  DELETE_REPLY_REQUEST,
+  DELETE_REPLY_SUCCESS,
+  DELETE_REPLY_FAILED,
 } from './../apis';
 
 const initState = {
   commitStatus: '',
   upStatus: '',
   upAction: {},
+  delReplyStatus: '',
 }
 
 export default function commitComment(state=initState, action) {
@@ -23,6 +27,10 @@ export default function commitComment(state=initState, action) {
     case UP_REPLY_SUCCESS:
     case UP_REPLY_FAILD:
       return Object.assign({}, state, { upStatus: action.status, upAction: action.action });
+    case DELETE_REPLY_REQUEST:
+    case DELETE_REPLY_SUCCESS:
+    case DELETE_REPLY_FAILED:
+      return Object.assign({}, state, { delReplyStatus: action.status });
     default:
       return state;
   }

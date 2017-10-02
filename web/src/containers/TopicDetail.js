@@ -54,7 +54,7 @@ class TopicDetail extends Component {
     upIndex: -1,
   }
   componentWillReceiveProps(nextProps) {
-    const { match, topic_detail, actions, getTopicDetailStatus, commitStatus, collectStatus, cancelStatus, upStatus, status, auth } = nextProps;
+    const { match, topic_detail, actions, getTopicDetailStatus, commitStatus, collectStatus, cancelStatus, upStatus, status, auth, delReplyStatus } = nextProps;
     if (getTopicDetailStatus !== this.props.getTopicDetailStatus && getTopicDetailStatus === 'succ' && status === 'succ') {
       const replyArr = topic_detail.replies.map(item => item.ups);
       this.setState({
@@ -62,6 +62,10 @@ class TopicDetail extends Component {
         replyArr,
       })
       actions.getUserInfo(topic_detail.author.loginname);
+    }
+
+    if (delReplyStatus !== this.props.delReplyStatus && delReplyStatus === 'succ') {
+      actions.getTopicDetail(match.params.id);
     }
 
     if (commitStatus !== this.props.commitStatus && commitStatus === 'succ') {
@@ -171,7 +175,8 @@ class TopicDetail extends Component {
     })
   }
   deleteReply = (author_id) => {
-    console.log(author_id);
+    const { actions } = this.props;
+    actions.delReply(author_id);
   }
   render() {
     const { topic_detail, info, getInfoStatus, auth, noReplyTopic, noReplyStatus } = this.props;
@@ -301,6 +306,7 @@ TopicDetail.propTypes = {
     cancelCollect: PropTypes.func,
     collect: PropTypes.func,
     upReply: PropTypes.func,
+    delReply: PropTypes.func,
   }),
   topic_detail: PropTypes.object,
   getTopicDetailStatus: PropTypes.string,
@@ -310,6 +316,7 @@ TopicDetail.propTypes = {
   upStatus: PropTypes.string,
   getInfoStatus: PropTypes.string,
   commitStatus: PropTypes.string,
+  delReplyStatus: PropTypes.string,
   status: PropTypes.string,
   upAction: PropTypes.object,
   info: PropTypes.object,
@@ -329,6 +336,7 @@ function mapStateToProps(state) {
     info: state.user.info,
     getInfoStatus: state.user.getInfoStatus,
     commitStatus: state.comment.commitStatus,
+    delReplyStatus: state.comment.delReplyStatus,
     status: state.auth.status,
     auth: state.auth.auth,
   };

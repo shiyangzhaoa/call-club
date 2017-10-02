@@ -49,6 +49,9 @@ import {
   MARK_ALL_MESSAGE_REQUEST,
   MARK_ALL_MESSAGE_SUCCESS,
   MARK_ALL_MESSAGE_FAILED,
+  DELETE_REPLY_REQUEST,
+  DELETE_REPLY_SUCCESS,
+  DELETE_REPLY_FAILED
 } from './../apis';
 
 const url = '/api';
@@ -379,6 +382,36 @@ export const upReply = (reply_id) => (dispatch) => {
     } else {
       dispatch({
         type: UP_REPLY_FAILD,
+        status: 'netErr',
+      })
+    }
+  })
+}
+
+//删除自己的评论
+export const delReply = (reply_id) => (dispatch) => {
+  dispatch({
+    type: DELETE_REPLY_REQUEST,
+    status: 'pending',
+  })
+  axios.delete(`${url}/reply/${reply_id}/delete`).then(({ data }) => {
+    if (data) {
+      dispatch({
+        type: DELETE_REPLY_SUCCESS,
+        status: 'succ',
+      })
+    } else {
+      throw new Error('错误');
+    }
+  }).catch(err => {
+    if (err.response) {
+      dispatch({
+        type: DELETE_REPLY_FAILED,
+        status: 'timeOut',
+      })
+    } else {
+      dispatch({
+        type: DELETE_REPLY_FAILED,
         status: 'netErr',
       })
     }
