@@ -10,7 +10,7 @@ import {
 const initState = {
   commitStatus: '',
   upStatus: '',
-  upAction: '',
+  upAction: {},
 }
 
 export default function commitComment(state=initState, action) {

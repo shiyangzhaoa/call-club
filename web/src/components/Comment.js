@@ -12,7 +12,7 @@ const Comment = props => {
     color: props.is_up ? '#000' : '#c8c8c8',
     transition: 'all .5s',
   }
-  const { info, index, changeStatus, upReply, commentId } = props;
+  const { info, index, changeStatus, upReply, commentId, author, deleteReply } = props;
   const dura = moment(info.create_at).fromNow();
   return (
     <div className="comment-item">
@@ -26,6 +26,12 @@ const Comment = props => {
             <span style={{fontSize: '11px'}}>{`${index + 1}楼•${dura}`}</span>
           </div>
           <div>
+            {
+              info.author_id === author &&
+              <a style={{marginRight: '8px', color: '#666'}} onClick={() => deleteReply(info.id)}>
+                <Icon type="delete" />
+              </a>
+            }
             <a>
               <Icon type="like" onClick={() => upReply(info.id, index)} style={{...style}}/>
             </a>

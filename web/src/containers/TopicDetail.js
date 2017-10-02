@@ -170,6 +170,9 @@ class TopicDetail extends Component {
       upIndex: index,
     })
   }
+  deleteReply = (author_id) => {
+    console.log(author_id);
+  }
   render() {
     const { topic_detail, info, getInfoStatus, auth, noReplyTopic, noReplyStatus } = this.props;
     if (topic_detail) {
@@ -223,7 +226,9 @@ class TopicDetail extends Component {
                             changeStatus={() => this.changeStatus(item.author_id, item.id)}
                             upReply={this.upReply}
                             ups={this.state.replyArr[index] || []}
-                            is_up={this.state.replyArr[index] && this.state.replyArr[index].includes(auth.id)}>
+                            is_up={this.state.replyArr[index] && this.state.replyArr[index].includes(auth.id)}
+                            author={auth.id}
+                            deleteReply={this.deleteReply}>
                             <ReactQuill
                               theme="snow"
                               modules={modules}
@@ -276,7 +281,8 @@ class TopicDetail extends Component {
                     noReplyTopic.map(item => (
                       <div className="no-reply-topic" key={item.id}><Link to={`/topics/${item.id}`}>{item.title}</Link></div>
                     ))
-                    : <div className="no-reply-topic">没有相应的话题</div>)
+                    : <div className="no-reply-topic">没有相应的话题</div>
+                  )
               }
             </Card>
           </div>
@@ -305,7 +311,7 @@ TopicDetail.propTypes = {
   getInfoStatus: PropTypes.string,
   commitStatus: PropTypes.string,
   status: PropTypes.string,
-  upAction: PropTypes.string,
+  upAction: PropTypes.object,
   info: PropTypes.object,
   auth: PropTypes.object,
 };

@@ -133,6 +133,11 @@ const commentCtrl = {
       throw new Error(e);
     }
   },
+
+  async deleteReply(ctx) {
+    const { reply_id } = ctx.params;
+    console.log(`收到${reply_id}`);
+  },
 };
 
 module.exports = commentCtrl;

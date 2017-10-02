@@ -14,6 +14,7 @@ const routers = router
   .post('/topic/create', resolveToken, topicController.create)
   .post('/topic/:topic_id/replies', resolveToken, commentController.create)
   .post('/reply/:reply_id/ups', resolveToken, commentController.upReply)
+  .delete('/reply/:reply_id/delete',  resolveToken, commentController.deleteReply)
   .post('/topic/topic_collect/collect', resolveToken, topicController.collect)
   .post('/topic_collect/de_collect', resolveToken, topicController.cancelCollect)
   .post('/user/login', userController.login)

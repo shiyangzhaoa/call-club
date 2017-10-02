@@ -8,9 +8,10 @@
 
   .fly-box {
     height: 63px;
-    width: 100%;
+    width: 100vw;
     position: fixed;
     top: 0;
+    left: 0;
   }
 
   .crow-box {
@@ -28,7 +29,6 @@
     color: #108ee9;
     font-weight: bold;
     text-align: right;
-    height: 110px;
   }
 
   .warin-text {
