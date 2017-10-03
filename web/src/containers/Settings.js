@@ -43,7 +43,8 @@ class Setting extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const { actions } = this.props;
+        actions.updateSetting(values);
       }
     });
   }
@@ -57,7 +58,7 @@ class Setting extends React.Component {
           label="登陆名"
           hasFeedback
         >
-          {getFieldDecorator('username', {
+          {getFieldDecorator('loginname', {
             rules: [{
               required: true, message: '不能为空!',
             }],
@@ -114,13 +115,36 @@ class Setting extends React.Component {
 const SettingForm = Form.create()(Setting);
 
 class Pass extends React.Component {
+  state = {
+    confirmDirty: false,
+  }
   changePass = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const { actions } = this.props;
+        actions.changePass(values);
       }
     });
+  }
+  checkPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value === form.getFieldValue('oldpass')) {
+      callback('新旧密码不能相同!');
+    } else {
+      callback();
+    }
+  }
+  checkConfirm = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['newpass'], { force: true });
+    }
+    callback();
+  }
+  handleConfirmBlur = (e) => {
+    const value = e.target.value;
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -134,6 +158,8 @@ class Pass extends React.Component {
           {getFieldDecorator('oldpass', {
             rules: [{
               required: true, message: '不能为空!',
+            }, {
+              validator: this.checkConfirm,
             }],
           })(
             <Input type="password" />
@@ -147,9 +173,11 @@ class Pass extends React.Component {
           {getFieldDecorator('newpass', {
             rules: [{
               required: true, message: '不能为空!',
+            },  {
+              validator: this.checkPassword,
             }],
           })(
-            <Input type="password" />
+            <Input type="password" onBlur={this.handleConfirmBlur}/>
           )}
         </FormItem>
         <FormItem {...tailFormItemLayout}>

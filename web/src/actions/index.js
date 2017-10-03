@@ -558,11 +558,12 @@ export const markAll = () => (dispatch) => {
 
 //更新基本信息
 export const updateSetting = (body) => (dispatch) => {
+  console.log(body);
   dispatch({
     type: UPDATE_SETTING_REQUEST,
     status: 'pending',
   })
-  axios.post(`${url}/user/basic_setting`, body).then(({ data }) => {
+  axios.put(`${url}/user/basic_setting`, body).then(({ data }) => {
     dispatch({
       type: UPDATE_SETTING_SUCCESS,
       status: 'succ',
@@ -588,7 +589,7 @@ export const changePass = (body) => (dispatch) => {
     type: UPDATE_PASSWORD_REQUEST,
     status: 'pending',
   })
-  axios.post(`${url}/user/set_password`, body).then(({ data }) => {
+  axios.put(`${url}/user/set_password`, body).then(({ data }) => {
     dispatch({
       type: UPDATE_PASSWORD_SUCCESS,
       status: 'succ',

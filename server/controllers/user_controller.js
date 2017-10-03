@@ -161,6 +161,7 @@ const userCtrl = {
 
   async changeSetting(ctx) {
     const reqBody = ctx.request.body;
+    const author_id = ctx.api_user.id;
     console.log('收到', reqBody);
   },
 
