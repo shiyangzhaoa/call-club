@@ -37,10 +37,10 @@
     "postcss-loader": "2.0.6",
     "promise": "8.0.1",
     "prop-types": "^15.6.0",
-    "react": "^15.6.1",
+    "react": "^16.0.0",
     "react-addons-css-transition-group": "^15.6.0",
     "react-dev-utils": "^4.0.1",
-    "react-dom": "^15.6.1",
+    "react-dom": "^16.0.0",
     "react-markdown": "^2.5.0",
     "react-quill": "^1.1.0",
     "react-redux": "^5.0.6",
@@ -98,7 +98,15 @@
     "presets": [
       "react-app"
     ],
-    "plugins": [["import", { "libraryName": "antd", "style": true }]]
+    "plugins": [
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "style": true
+        }
+      ]
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
