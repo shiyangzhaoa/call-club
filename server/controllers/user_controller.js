@@ -36,6 +36,26 @@ const findTopic = (query) => {
   });
 };
 
+const findById = user_id => {
+  return new Promise((resolve, reject) => {
+    User.findById(user_id, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  });
+};
+
+const saveUser = (newUser) => {
+  return new Promise((resolve, reject) => {
+    newUser.save((err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  });
+};
+
 const findComment = (query) => {
   return new Promise((resolve, reject) => {
     Comment.find(query, (err, result) => {
@@ -162,7 +182,17 @@ const userCtrl = {
   async changeSetting(ctx) {
     const reqBody = ctx.request.body;
     const author_id = ctx.api_user.id;
-    console.log('收到', reqBody);
+    try {
+      const author = await findById(author_id);
+      const updateResult = await saveUser(Object.assign(author, reqBody));
+      ctx.status = 200;
+      ctx.body = {
+        success: true,
+        message: '更新成功',
+      };
+    } catch (e) {
+      throw new Error(e);
+    }
   },
 
   async setNewPassword(ctx) {
