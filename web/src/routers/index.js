@@ -15,6 +15,7 @@ import NoMatch from './../components/NoMatch';
 import Register from './../containers/Register';
 import CreateTopic from './../containers/CreateTopic';
 import Message from './../containers/Message';
+import Setting from './../containers/Settings';
 
 const AppRouter = () => (
   <Router>
@@ -29,6 +30,7 @@ const AppRouter = () => (
         <PrivateRoute path="/login" component={Login}/>
         <PrivateRoute path="/register" component={Register}/>
         <AuthRoute path='/create-topic' component={CreateTopic}/>
+        <AuthRoute path='/setting' component={Setting}></AuthRoute>
         <Route component={NoMatch}/>
       </Switch>
     </div>
