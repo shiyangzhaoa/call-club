@@ -56,6 +56,12 @@ class Login extends React.Component {
       }
     });
   }
+  forgot = () => {
+    notification.open({
+      message: '你在开玩喜？',
+      description: '密码丢了就丢了，请联系管理员...',
+    });
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -81,7 +87,7 @@ class Login extends React.Component {
             <FormItem>
               <div className="form-ctrl">
                 <div>
-                  <a className="login-form-forgot" href="">Forgot password</a>
+                  <a className="login-form-forgot" onClick={this.forgot}>Forgot password</a>
                 </div>
                 <Button type="primary" htmlType="submit" className="login-form-button">
                   登陆
