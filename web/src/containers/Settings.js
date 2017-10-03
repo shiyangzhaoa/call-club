@@ -34,6 +34,85 @@ const tailFormItemLayout = {
   },
 };
 
+class Setting extends React.Component {
+  componentDidMount() {
+    const { actions, auth } = this.props;
+    if (!auth.id) actions.auth();
+  }
+  saveSetting = (e) => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+      }
+    });
+  }
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const { auth } = this.props;
+    return (
+      <Form onSubmit={this.saveSetting} className="setting-form">
+        <FormItem
+          {...formItemLayout}
+          label="登陆名"
+          hasFeedback
+        >
+          {getFieldDecorator('username', {
+            rules: [{
+              required: true, message: '不能为空!',
+            }],
+            initialValue: auth.loginname,
+          })(
+            <Input disabled/>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="电子邮件"
+          hasFeedback
+        >
+          {getFieldDecorator('email', {
+            rules: [{
+              required: true, message: '不能为空!',
+            }, {
+              type: 'email', message: '格式不正确',
+            }],
+            initialValue: auth.email,
+          })(
+            <Input/>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="个人网站"
+        >
+          {getFieldDecorator('web', {
+            rules: [],
+            initialValue: auth.web,
+          })(
+            <Input/>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="个性签名"
+        >
+          {getFieldDecorator('signature', {
+            rules: [],
+            initialValue: auth.signature,
+          })(
+            <Input/>
+          )}
+        </FormItem>
+        <FormItem {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">保存设置</Button>
+        </FormItem>
+      </Form>
+    );
+  }
+}
+const SettingForm = Form.create()(Setting);
+
 class Pass extends React.Component {
   changePass = (e) => {
     e.preventDefault();
@@ -82,106 +161,33 @@ class Pass extends React.Component {
 }
 const PassForm = Form.create()(Pass);
 
-class Setting extends React.Component {
-  saveSetting = (e) => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
-  }
-  render() {
-    const { getFieldDecorator } = this.props.form;
-    return (
-      <Form onSubmit={this.saveSetting} className="setting-form">
-        <FormItem
-          {...formItemLayout}
-          label="登陆名"
-          hasFeedback
-        >
-          {getFieldDecorator('username', {
-            rules: [{
-              required: true, message: '不能为空!',
-            }],
-          })(
-            <Input disabled />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="电子邮件"
-          hasFeedback
-        >
-          {getFieldDecorator('email', {
-            rules: [{
-              required: true, message: '不能为空!',
-            }, {
-              type: 'email', message: '格式不正确',
-            }],
-          })(
-            <Input/>
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="个人网站"
-        >
-          {getFieldDecorator('web', {
-            rules: [],
-          })(
-            <Input/>
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="个性签名"
-        >
-          {getFieldDecorator('signature', {
-            rules: [],
-          })(
-            <Input/>
-          )}
-        </FormItem>
-        <FormItem {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">保存设置</Button>
-        </FormItem>
-      </Form>
-    );
-  }
-}
-const SettingForm = Form.create()(Setting);
-
-class Settings extends React.Component {
-  componentWillReceiveProps(nextprops) {
-  }
-  render() {
-    return (
-      <div className="setting-page">
-        <Header backTo='/' back='首页' now='设置'/>
-        <div className="content">
-          <Card className="setting-card" noHovering='false' title="基本设置">
-            <SettingForm />
-          </Card>
-          <Card className="setting-card" noHovering='false' title="更改密码">
-            <PassForm />
-          </Card>
-        </div>
-      </div>
-    );
-  }
-}
-
-Settings.propTypes = {
+PassForm.propTypes = {
   actions: PropTypes.shape({
-    login: PropTypes.func,
+    auth: PropTypes.func,
+    updateSetting: PropTypes.func,
   }),
-  loginStatus: PropTypes.string,
+  status: PropTypes.string,
+  updateStatus: PropTypes.string,
+  changeStatus: PropTypes.string,
+  auth: PropTypes.object,
+};
+SettingForm.propTypes = {
+  actions: PropTypes.shape({
+    auth: PropTypes.func,
+    changePass: PropTypes.func,
+  }),
+  status: PropTypes.string,
+  updateStatus: PropTypes.string,
+  changeStatus: PropTypes.string,
+  auth: PropTypes.object,
 };
 
 function mapStateToProps(state) {
   const props = {
-    loginStatus: state.user.loginStatus,
+    status: state.user.loginStatus,
+    auth: state.auth.auth,
+    updateStatus: state.user.updateStatus,
+    changeStatus: state.user.changeStatus,
   };
   return props;
 }
@@ -189,4 +195,23 @@ function mapDispatchToProps(dispatch) {
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Settings));
+const Frist = withRouter(connect(mapStateToProps, mapDispatchToProps)(SettingForm));
+const Second = withRouter(connect(mapStateToProps, mapDispatchToProps)(PassForm));
+
+export default class Settings extends React.Component {
+  render() {
+    return (
+      <div className="setting-page">
+        <Header backTo='/' back='首页' now='设置'/>
+        <div className="content">
+          <Card className="setting-card" noHovering='false' title="基本设置">
+            <Frist />
+          </Card>
+          <Card className="setting-card" noHovering='false' title="更改密码">
+            <Second />
+          </Card>
+        </div>
+      </div>
+    );
+  }
+};

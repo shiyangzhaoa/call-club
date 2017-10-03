@@ -51,7 +51,13 @@ import {
   MARK_ALL_MESSAGE_FAILED,
   DELETE_REPLY_REQUEST,
   DELETE_REPLY_SUCCESS,
-  DELETE_REPLY_FAILED
+  DELETE_REPLY_FAILED,
+  UPDATE_SETTING_REQUEST,
+  UPDATE_SETTING_SUCCESS,
+  UPDATE_SETTING_FAILED,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAILED,
 } from './../apis';
 
 const url = '/api';
@@ -544,6 +550,58 @@ export const markAll = () => (dispatch) => {
     } else {
       dispatch({
         type: MARK_ALL_MESSAGE_FAILED,
+        status: 'netErr',
+      })
+    }
+  })
+}
+
+//更新基本信息
+export const updateSetting = (body) => (dispatch) => {
+  dispatch({
+    type: UPDATE_SETTING_REQUEST,
+    status: 'pending',
+  })
+  axios.post(`${url}/user/basic_setting`, body).then(({ data }) => {
+    dispatch({
+      type: UPDATE_SETTING_SUCCESS,
+      status: 'succ',
+    })
+  }).catch(err => {
+    if (err.response) {
+      dispatch({
+        type: UPDATE_SETTING_FAILED,
+        status: 'timeOut',
+      })
+    } else {
+      dispatch({
+        type: UPDATE_SETTING_FAILED,
+        status: 'netErr',
+      })
+    }
+  })
+}
+
+//更换密码
+export const changePass = (body) => (dispatch) => {
+  dispatch({
+    type: UPDATE_PASSWORD_REQUEST,
+    status: 'pending',
+  })
+  axios.post(`${url}/user/set_password`, body).then(({ data }) => {
+    dispatch({
+      type: UPDATE_PASSWORD_SUCCESS,
+      status: 'succ',
+    })
+  }).catch(err => {
+    if (err.response) {
+      dispatch({
+        type: UPDATE_PASSWORD_FAILED,
+        status: 'timeOut',
+      })
+    } else {
+      dispatch({
+        type: UPDATE_PASSWORD_FAILED,
         status: 'netErr',
       })
     }

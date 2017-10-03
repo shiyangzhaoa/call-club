@@ -21,6 +21,8 @@ const routers = router
   .post('/user/register', userController.createUser)
   .get('/user-info/:loginname', userController.getInfo)
   .get('/user/auth', resolveToken, userController.getAuth)
+  .put('/user/basic_setting', resolveToken, userController.changeSetting)
+  .put('/user/set_password', resolveToken, userController.setNewPassword)
   .get('/message/count', resolveToken, messageController.getCount)
   .get('/messages', resolveToken, messageController.getMessages)
   .post('/message/mark_one/:msg_id', resolveToken, messageController.markOne)

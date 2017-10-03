@@ -72,6 +72,7 @@ const userCtrl = {
       ctx.body = e.message;
     }
   },
+
   async login (ctx) {
     const { loginname, password } = ctx.request.body;
     try {
@@ -106,6 +107,7 @@ const userCtrl = {
       ctx.body = e.message;
     }
   },
+
   async getInfo(ctx) {
     const {
       loginname
@@ -136,6 +138,7 @@ const userCtrl = {
       ctx.body = e.message;
     }
   },
+
   async getAuth(ctx) {
     const { id } = ctx.api_user;
     try {
@@ -154,6 +157,16 @@ const userCtrl = {
       ctx.status = 500;
       ctx.body = e.message;
     }
+  },
+
+  async changeSetting(ctx) {
+    const reqBody = ctx.request.body;
+    console.log('收到', reqBody);
+  },
+
+  async setNewPassword(ctx) {
+    const reqBody = ctx.request.body;
+    console.log('收到pass', reqBody);
   }
 };
 

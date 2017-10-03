@@ -8,6 +8,12 @@ import {
   GET_USERINFO_REQUSET,
   GET_USERINFO_SUCCESS,
   GET_USERINFO_FAILED,
+  UPDATE_SETTING_REQUEST,
+  UPDATE_SETTING_SUCCESS,
+  UPDATE_SETTING_FAILED,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAILED,
 } from './../apis';
 
 const initState = {
@@ -15,6 +21,8 @@ const initState = {
   info: null,
   loginStatus: '',
   getInfoStatus: '',
+  updateStatus: '',
+  changeStatus: '',
 }
 
 export default function user (state = initState, action) {
@@ -30,7 +38,15 @@ export default function user (state = initState, action) {
     case GET_USERINFO_REQUSET:
     case GET_USERINFO_SUCCESS:
     case GET_USERINFO_FAILED:
-      return Object.assign({}, state, { info: action.info }, { getInfoStatus: action.status })
+      return Object.assign({}, state, { info: action.info }, { getInfoStatus: action.status });
+    case UPDATE_SETTING_REQUEST:
+    case UPDATE_SETTING_SUCCESS:
+    case UPDATE_SETTING_FAILED:
+      return Object.assign({}, state, { updateStatus: action.status });
+    case UPDATE_PASSWORD_REQUEST:
+    case UPDATE_PASSWORD_SUCCESS:
+    case UPDATE_PASSWORD_FAILED:
+      return Object.assign({}, state, { changeStatus: action.status });
     default:
       return state;
   }
