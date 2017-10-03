@@ -71,6 +71,9 @@ class NavBar extends Component {
       case 'message':
         this.props.history.push("/message");
         break;
+      case 'setting':
+        this.props.history.push("/setting");
+        break;
       default:
         return false;
     }
@@ -149,7 +152,7 @@ class NavBar extends Component {
               title={<span><Icon type="setting" /><span>操作</span></span>}
             >
                 <Menu.Item key="createTopic">创建新话题</Menu.Item>
-                <Menu.Item key="settings">设置</Menu.Item>
+                <Menu.Item key="setting">设置</Menu.Item>
                 <Menu.Item key="signout">退出</Menu.Item>
               </SubMenu>
             )}

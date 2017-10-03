@@ -165,7 +165,7 @@ const userCtrl = {
       const findResult = await findOne({ _id: id }, {password: 0});
       if (findResult.length) {
         ctx.status = 200;
-        ctx.body = _.pick(findResult[0], ['id', 'avatar_url', 'creat_time', 'email', 'loginname', 'signature']);
+        ctx.body = _.pick(findResult[0], ['id', 'avatar_url', 'creat_time', 'email', 'loginname', 'signature', 'web']);
       } else {
         ctx.status = 200;
         ctx.body = {
@@ -197,7 +197,26 @@ const userCtrl = {
 
   async setNewPassword(ctx) {
     const reqBody = ctx.request.body;
-    console.log('收到pass', reqBody);
+    const author_id = ctx.api_user.id;
+    try {
+      const author = await findById(author_id);
+      if (author.password !== reqBody.oldpass) {
+        ctx.status = 200;
+        ctx.body = {
+          success: false,
+          message: '原始密码错误',
+        };
+      } else {
+        author.password = reqBody.newpass;
+        const changeResult = await saveUser(author);
+        ctx.body = {
+          success: true,
+          message: '修改密码成功',
+        }
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 };
 

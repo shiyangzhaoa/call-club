@@ -590,10 +590,17 @@ export const changePass = (body) => (dispatch) => {
     status: 'pending',
   })
   axios.put(`${url}/user/set_password`, body).then(({ data }) => {
-    dispatch({
-      type: UPDATE_PASSWORD_SUCCESS,
-      status: 'succ',
-    })
+    if (data.success) {
+      dispatch({
+        type: UPDATE_PASSWORD_SUCCESS,
+        status: 'succ',
+      })
+    } else {
+      dispatch({
+        type: UPDATE_PASSWORD_SUCCESS,
+        status: 'errPass',
+      })
+    }
   }).catch(err => {
     if (err.response) {
       dispatch({

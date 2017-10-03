@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Form, Icon, Input, Button, notification, Card } from 'antd';
+import { Form, Input, Button, message, Card } from 'antd';
+import md5 from 'md5';
 
 import Header from './../components/Header';
 import * as actions from './../actions';
@@ -35,6 +36,13 @@ const tailFormItemLayout = {
 };
 
 class Setting extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    const { actions, updateStatus } = nextProps;
+    if (updateStatus !== this.props.updateStatus && nextProps.updateStatus === 'succ') {
+      message.success('更新成功');
+      actions.auth();
+    }
+  }
   componentDidMount() {
     const { actions, auth } = this.props;
     if (!auth.id) actions.auth();
@@ -118,12 +126,27 @@ class Pass extends React.Component {
   state = {
     confirmDirty: false,
   }
+  componentWillReceiveProps(nextProps) {
+    const { changeStatus } = nextProps;
+    if (changeStatus !== this.props.changeStatus && changeStatus === 'errPass') {
+      message.error('原始密码错误');
+    } else if (changeStatus !== this.props.changeStatus && changeStatus === 'succ') {
+      message.success('修改成功');
+      localStorage.removeItem('login_token');
+      this.props.history.push('/login');
+    } else if (changeStatus !== this.props.changeStatus && changeStatus === 'netErr') {
+      message.error('网络错误');
+    }
+  }
   changePass = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const { actions } = this.props;
-        actions.changePass(values);
+        actions.changePass({
+          oldpass: md5(values.oldpass),
+          newpass: md5(values.newpass),
+        });
       }
     });
   }
