@@ -63,10 +63,16 @@ class CreateTopic extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        const { actions } = this.props;
+        const { actions, topic_detail } = this.props;
         const { topicId } = this.props.match.params;
         if (topicId) {
           console.log('修改');
+          actions.updateTopic({
+            id: topic_detail.id,
+            tab: values.tab,
+            title: values.title,
+            content: this.state.text,
+          })
         } else {
           actions.createTopic({
             tab: values.tab,
@@ -78,7 +84,7 @@ class CreateTopic extends Component {
     });
   }
   componentWillReceiveProps(nextProps) {
-    const { createTopicStatus, getTopicDetailStatus, topic_detail, history } = nextProps;
+    const { createTopicStatus, getTopicDetailStatus, topic_detail, history, updateTopicStatus } = nextProps;
     if (createTopicStatus !== this.props.createTopicStatus && nextProps.createTopicStatus === 'succ') {
       this.props.history.push('/');
     }
@@ -90,6 +96,15 @@ class CreateTopic extends Component {
     } else if (getTopicDetailStatus !== this.props.getTopicDetailStatus && getTopicDetailStatus === 'cantFind') {
       message.error('话题不存在！！！');
       history.goBack(-1);
+    }
+
+    if (updateTopicStatus !== this.props.updateTopicStatus && updateTopicStatus === 'succ') {
+      message.success('修改成功');
+      history.push(`/topics/${topic_detail.id}`)
+    } else if (updateTopicStatus !== this.props.updateTopicStatus && updateTopicStatus === 'cantFind') {
+      message.error('文章不存在');
+    } else if (updateTopicStatus !== this.props.updateTopicStatus && updateTopicStatus === 'netErr') {
+      message.error('请检查网络或服务');
     }
   }
   componentDidMount() {
@@ -165,6 +180,7 @@ CreateTopic.propTypes = {
   createTopicStatus: PropTypes.string,
   topic_detail: PropTypes.object,
   getTopicDetailStatus: PropTypes.string,
+  updateTopicStatus: PropTypes.string,
 };
 
 const CreateTopicCom = Form.create()(CreateTopic);
@@ -174,6 +190,7 @@ function mapStateToProps(state) {
     createTopicStatus: state.topic.createTopicStatus,
     topic_detail: state.topic.topic_detail,
     getTopicDetailStatus: state.topic.getTopicDetailStatus,
+    updateTopicStatus: state.topic.updateTopicStatus,
   };
   return props;
 }

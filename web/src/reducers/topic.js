@@ -20,6 +20,9 @@ import {
   DELETE_TOPIC_REQUEST,
   DELETE_TOPIC_SUCCESS,
   DELETE_TOPIC_FAILED,
+  UPDATE_TOPIC_REQUEST,
+  UPDATE_TOPIC_SUCCESS,
+  UPDATE_TOPIC_FAILED,
 } from './../apis';
 
 const initState = {
@@ -33,7 +36,8 @@ const initState = {
   cancelStatus: '',
   noReplyStatus: '',
   noReplyTopic: [],
-  deleteTopicStatus: ''
+  deleteTopicStatus: '',
+  updateTopicStatus: '',
 }
 
 export default function topic (state = initState, action) {
@@ -66,6 +70,10 @@ export default function topic (state = initState, action) {
     case DELETE_TOPIC_SUCCESS:
     case DELETE_TOPIC_FAILED:
       return Object.assign({}, state, { deleteTopicStatus: action.status });
+    case UPDATE_TOPIC_REQUEST:
+    case UPDATE_TOPIC_SUCCESS:
+    case UPDATE_TOPIC_FAILED:
+      return Object.assign({}, state, { updateTopicStatus: action.status });
     default:
       return state;
   }

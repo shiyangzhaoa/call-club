@@ -61,6 +61,9 @@ import {
   DELETE_TOPIC_REQUEST,
   DELETE_TOPIC_SUCCESS,
   DELETE_TOPIC_FAILED,
+  UPDATE_TOPIC_REQUEST,
+  UPDATE_TOPIC_SUCCESS,
+  UPDATE_TOPIC_FAILED,
 } from './../apis';
 
 const url = '/api';
@@ -652,6 +655,39 @@ export const deleteTopic = (topic_id) => (dispatch) => {
     } else {
       dispatch({
         type: DELETE_TOPIC_FAILED,
+        status: 'netErr',
+      })
+    }
+  })
+}
+
+//修改话题
+export const updateTopic = (body) => (dispatch) => {
+  dispatch({
+    type: UPDATE_TOPIC_REQUEST,
+    status: 'pending',
+  })
+  axios.put(`${url}/topic/update`, body).then(({ data }) => {
+    if (data.success) {
+      dispatch({
+        type: UPDATE_TOPIC_SUCCESS,
+        status: 'succ',
+      })
+    } else {
+      dispatch({
+        type: UPDATE_TOPIC_FAILED,
+        status: 'cantFind',
+      })
+    }
+  }).catch(err => {
+    if (err.response) {
+      dispatch({
+        type: UPDATE_TOPIC_FAILED,
+        status: 'timeOut',
+      })
+    } else {
+      dispatch({
+        type: UPDATE_TOPIC_FAILED,
         status: 'netErr',
       })
     }

@@ -19,9 +19,8 @@ const findTopic = function (obj, filter, limit, skip) {
   });
 };
 
-const createTopic = (body) => {
+const createTopic = (newTopic) => {
   return new Promise((resolve, reject) => {
-    const newTopic = new Topic(body);
     newTopic.save((err, result) => {
       if (err) reject(err);
 
@@ -173,7 +172,7 @@ const userCtrl = {
       const auth = await findUserById(id);
       if (auth.id) {
         ctx.status = 200;
-        const createResult = await createTopic({
+        const newTopic = new Topic({
           author_id: auth._id,
           tab: req.tab,
           content: req.content,
@@ -184,6 +183,7 @@ const userCtrl = {
           },
           create_at: new Date(),
         });
+        const createResult = await createTopic(newTopic);
         ctx.body = {
           message: '创建成功',
           topic: _.pick(createResult, ['id'])
@@ -328,6 +328,31 @@ const userCtrl = {
             message: '删除成功',
           };
         }
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
+  },
+
+  async updateTopic(ctx) {
+    const { id } = ctx.api_user;
+    const req = ctx.request.body;
+    try {
+      const findTopic = await findTopicById(req.id);
+      console.log(findTopic.author_id.toString() === id)
+      if (findTopic.author_id.toString() === id) {
+        const createResult = await createTopic(Object.assign(findTopic, req));
+        ctx.status = 200;
+        ctx.body = {
+          success: true,
+          message: '修改成功',
+        };
+      } else {
+        ctx.status = 200;
+        ctx.body = {
+          success: false,
+          message: '文章不存在'
+        };
       }
     } catch (e) {
       throw new Error(e);
