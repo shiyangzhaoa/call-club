@@ -19,7 +19,6 @@ const initState = {
   getMessageStatus: '',
   messages: null,
   markOneStatus: '',
-  markResult: '',
   markAllStatus: '',
 };
 
@@ -36,7 +35,7 @@ export default function commitComment(state=initState, action) {
     case MARK_ONE_MESSAGE_REQUEST:
     case MARK_ONE_MESSAGE_SUCCESS:
     case MARK_ONE_MESSAGE_FAILED:
-      return Object.assign({}, state, { markOneStatus: action.status, markResult: action.data });
+      return Object.assign({}, state, { markOneStatus: action.status });
     case  MARK_ALL_MESSAGE_REQUEST:
     case  MARK_ALL_MESSAGE_SUCCESS:
     case  MARK_ALL_MESSAGE_FAILED:

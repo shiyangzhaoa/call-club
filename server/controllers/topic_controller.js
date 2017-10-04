@@ -7,6 +7,7 @@ const  _  = require('lodash');
 const Topic = require('./../models/topic');
 const User = require('./../models/user');
 const Comment = require('./../models/comment');
+const Message = require('./../models/message');
 const TopicCollect = require('./../models/Topic_collect');
 //const gravatar = require('gravatar');
 
@@ -113,6 +114,16 @@ const deleteTopic = (query) => {
 const removeReply = (query) => {
   return new Promise((resolve, reject) => {
     Comment.remove(query, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  });
+}
+
+const removeMessage = (query) => {
+  return new Promise((resolve, reject) => {
+    Message.remove(query, (err, result) => {
       if (err) reject(err);
 
       resolve(result);
@@ -321,7 +332,8 @@ const userCtrl = {
       } else {
         const removeResult = await deleteTopic({ _id: topic_id, author_id: id });
         const removeCommet = await removeReply({ topic_id });
-        if (removeResult.result.n && removeCommet.result.ok) {
+        const reomveMessage = await removeMessage({ topic_author_id: topic_id });
+        if (removeResult.result.n && removeCommet.result.ok && reomveMessage.result.ok) {
           ctx.status = 200;
           ctx.body = {
             success: true,
@@ -339,7 +351,6 @@ const userCtrl = {
     const req = ctx.request.body;
     try {
       const findTopic = await findTopicById(req.id);
-      console.log(findTopic.author_id.toString() === id)
       if (findTopic.author_id.toString() === id) {
         const createResult = await createTopic(Object.assign(findTopic, req));
         ctx.status = 200;

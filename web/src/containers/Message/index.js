@@ -25,7 +25,7 @@ class Message extends Component {
   readMessage = (topic_id, msg_id) => {
     const { actions } = this.props;
     msg_id && actions.markOne(msg_id);
-    this.props.history.push(`/topics/${topic_id}`);
+    topic_id && this.props.history.push(`/topics/${topic_id}`);
   }
   markAll = () => {
     const { actions } = this.props;
@@ -48,9 +48,9 @@ class Message extends Component {
                     {
                       item.type === 'comment' ?
                         <div>
-                          <span>有人在你发表的<a className="topic-link" onClick={() => this.readMessage(item.topic.id, item.id)}>{item.topic.title}</a>中评论了你</span>
+                          <span>有人在你发表的<a className="topic-link" onClick={() => this.readMessage(item.topic.id, item.id)}>{item.topic.title || '（文章已经删除）'}</a>中评论了你</span>
                         </div>
-                        : <div>有人在文章<a className="topic-link" onClick={() => this.readMessage(item.topic.id, item.id)}>{item.topic.title}</a>中@了你</div>
+                        : <div>有人在文章<a className="topic-link" onClick={() => this.readMessage(item.topic.id, item.id)}>{item.topic.title || '（文章已经删除）'}</a>中@了你</div>
                     }
                   </li>
                 ))
@@ -67,9 +67,9 @@ class Message extends Component {
                     {
                       item.type === 'comment' ?
                         <div>
-                          <span>有人在你发表的<a className="topic-link" onClick={() => this.readMessage(item.topic.id)}>{item.topic.title}</a>中评论了你</span>
+                          <span>有人在你发表的<a className="topic-link" onClick={() => this.readMessage(item.topic.id)}>{item.topic.title || '（文章已经删除）'}</a>中评论了你</span>
                         </div>
-                        : <div>有人在文章<a className="topic-link" onClick={() => this.readMessage(item.topic.id)}>{item.topic.title}</a>中@了你</div>
+                        : <div>有人在文章<a className="topic-link" onClick={() => this.readMessage(item.topic.id)}>{item.topic.title || '（文章已经删除）'}</a>中@了你</div>
                     }
                   </li>
                 ))
@@ -94,7 +94,6 @@ Message.propTypes = {
   messages: PropTypes.object,
   markOneStatus: PropTypes.string,
   markAllStatus: PropTypes.string,
-  markResult: PropTypes.string,
 };
 
 function mapStateToProps(state) {
@@ -103,7 +102,6 @@ function mapStateToProps(state) {
     messages: state.message.messages,
     markOneStatus: state.message.markOneStatus,
     markAllStatus: state.message.markAllStatus,
-    markResult: state.message.markResult,
   };
   return props;
 }

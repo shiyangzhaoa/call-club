@@ -525,7 +525,6 @@ export const markOne = (msg_id) => (dispatch) => {
     dispatch({
       type: MARK_ONE_MESSAGE_SUCCESS,
       status: 'succ',
-      data,
     })
   }).catch(err => {
     if (err.response) {

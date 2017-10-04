@@ -23,14 +23,14 @@ const findTopicById = topic_id => {
   });
 };
 
-const updateTopic = (topic_id, author_id) => {
+const updateTopic = (topic_id, author_id, count) => {
   return new Promise((resolve, reject) => {
     Topic.update({ _id: topic_id }, {
       '$set': {
         "last_reply_at": new Date(),
         "last_reply": author_id,
       },
-      '$inc': {"reply_count": 1}
+      '$inc': {"reply_count": count}
     }, (err, result) => {
       if (err) reject(err);
 
@@ -80,6 +80,16 @@ const createMessage = (body) => {
   });
 }
 
+const removeMessage = (query) => {
+  return new Promise((resolve, reject) => {
+    Message.remove(query, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  });
+}
+
 const commentCtrl = {
   async create(ctx) {
     const author_id = ctx.api_user.id;
@@ -108,7 +118,7 @@ const commentCtrl = {
         type,
       }
       await createMessage(newMessage);
-      const updateResult = await updateTopic(topic_id, author_id);
+      const updateResult = await updateTopic(topic_id, author_id, 1);
       if (!updateResult.ok) {
         throw new Error('更新失败');
       }
@@ -147,13 +157,18 @@ const commentCtrl = {
   async deleteReply(ctx) {
     const { reply_id } = ctx.params;
     try {
+      const findResult = await findCommentById(reply_id);
       const removeResult = await removeReply({ _id: reply_id });
-      if (removeResult.result.ok) {
+      console.log(findResult);
+      const updateResult = await updateTopic(findResult.topic_id.toString(), findResult.author_id, -1);
+      if (removeResult.result.ok && updateResult.ok) {
         ctx.status = 200;
         ctx.body = {
           success: true,
           message: '删除成功',
         };
+      } else {
+        throw new Error('失败');
       }
     } catch (e) {
       throw new Error(e);
