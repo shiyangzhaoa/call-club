@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Card, Button, message, BackTop } from 'antd';
+import { Card, Button, message, BackTop, Icon, Tooltip } from 'antd';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
 import ReactQuill from 'react-quill';
@@ -54,7 +54,7 @@ class TopicDetail extends Component {
     upIndex: -1,
   }
   componentWillReceiveProps(nextProps) {
-    const { match, topic_detail, actions, getTopicDetailStatus, commitStatus, collectStatus, cancelStatus, upStatus, status, auth, delReplyStatus } = nextProps;
+    const { match, topic_detail, actions, getTopicDetailStatus, commitStatus, collectStatus, cancelStatus, upStatus, status, auth, delReplyStatus, deleteTopicStatus } = nextProps;
     if (getTopicDetailStatus !== this.props.getTopicDetailStatus && getTopicDetailStatus === 'succ' && status === 'succ') {
       const replyArr = topic_detail.replies.map(item => item.ups);
       this.setState({
@@ -62,6 +62,8 @@ class TopicDetail extends Component {
         replyArr,
       })
       actions.getUserInfo(topic_detail.author.loginname);
+    } else if (getTopicDetailStatus !== this.props.getTopicDetailStatus && getTopicDetailStatus === 'cantFind') {
+      message.error('文章不存在!!!');
     }
 
     if (delReplyStatus !== this.props.delReplyStatus && delReplyStatus === 'succ') {
@@ -109,6 +111,15 @@ class TopicDetail extends Component {
     if (match.params.id !== this.props.match.params.id) {
       actions.getTopicDetail(match.params.id);
       actions.noReply(match.params.id);
+    }
+
+    if (deleteTopicStatus !== this.props.deleteTopicStatus && deleteTopicStatus === 'succ') {
+      message.success('删除成功');
+      this.props.history.push('/');
+    } else if (deleteTopicStatus !== this.props.deleteTopicStatus && deleteTopicStatus === 'cantFind') {
+      message.error('文章已不存在');
+    } else if(deleteTopicStatus !== this.props.deleteTopicStatus && deleteTopicStatus === 'netErr') {
+      message.error('请检查网络或服务');
     }
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -178,6 +189,10 @@ class TopicDetail extends Component {
     const { actions } = this.props;
     actions.delReply(author_id);
   }
+  deleteTopic = (topic_id) => {
+    const { actions } = this.props;
+    actions.deleteTopic(topic_id);
+  }
   render() {
     const { topic_detail, info, getInfoStatus, auth, noReplyTopic, noReplyStatus } = this.props;
     if (topic_detail) {
@@ -214,6 +229,20 @@ class TopicDetail extends Component {
                     <span className="info-item">{`作者 ${topic_detail.author.loginname} `}</span>
                     <span className="info-item">{`${topic_detail.visit_count} 次浏览`}</span>
                     <span className="info-item">{`来自 ${topic_detail.kind}`}</span>
+                    { auth.id === topic_detail.author_id &&
+                      <Tooltip title="删除该话题，不可撤销">
+                        <a style={{ marginLeft: '20px'}} onClick={() => this.deleteTopic(topic_detail.id)}>
+                          <Icon type="delete" style={{ fontSize: 18, color: '#000' }}/>
+                        </a>
+                      </Tooltip>
+                    }
+                    { auth.id === topic_detail.author_id &&
+                      <Tooltip title="编辑该话题">
+                        <a style={{ marginLeft: '20px'}}>
+                          <Icon type="edit" style={{ fontSize: 18, color: '#000' }}/>
+                        </a>
+                      </Tooltip>
+                    }
                   </Card>
                   <Card className="topic-item" noHovering='false'>
                     <ReactMarkdown className="markdown-body" source={topic_detail.content} />
@@ -307,6 +336,7 @@ TopicDetail.propTypes = {
     collect: PropTypes.func,
     upReply: PropTypes.func,
     delReply: PropTypes.func,
+    deleteTopic: PropTypes.func,
   }),
   topic_detail: PropTypes.object,
   getTopicDetailStatus: PropTypes.string,
@@ -321,6 +351,7 @@ TopicDetail.propTypes = {
   upAction: PropTypes.object,
   info: PropTypes.object,
   auth: PropTypes.object,
+  deleteTopicStatus: PropTypes.string,
 };
 
 function mapStateToProps(state) {
@@ -331,6 +362,7 @@ function mapStateToProps(state) {
     cancelStatus: state.topic.cancelStatus,
     noReplyTopic: state.topic.noReplyTopic,
     noReplyStatus: state.topic.noReplyStatus,
+    deleteTopicStatus: state.topic.deleteTopicStatus,
     upStatus: state.comment.upStatus,
     upAction: state.comment.upAction,
     info: state.user.info,

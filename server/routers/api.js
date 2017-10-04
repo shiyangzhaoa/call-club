@@ -13,6 +13,7 @@ const routers = router
   .get('/topic/no_reply', topicController.getNoReply)
   .post('/topic/create', resolveToken, topicController.create)
   .post('/topic/:topic_id/replies', resolveToken, commentController.create)
+  .delete('/topic/:topic_id/delete', resolveToken, topicController.removeTopic)
   .post('/reply/:reply_id/ups', resolveToken, commentController.upReply)
   .delete('/reply/:reply_id/delete',  resolveToken, commentController.deleteReply)
   .post('/topic/topic_collect/collect', resolveToken, topicController.collect)

@@ -18,9 +18,12 @@
     margin-left: 20px;
 
     .no-reply-topic {
-      border-bottom: 2px solid #ddd;
       padding: 10px 15px;
       font-size: 15px;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #ddd;
+      }
     }
 
     a {

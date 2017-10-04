@@ -101,6 +101,36 @@ const cancelTopic = query => {
   })
 }
 
+const deleteTopic = (query) => {
+  return new Promise((resolve, reject) => {
+    Topic.remove(query, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  });
+};
+
+const removeReply = (query) => {
+  return new Promise((resolve, reject) => {
+    Comment.remove(query, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  });
+}
+
+const findTopicById = (topic_id) => {
+  return new Promise((resolve, reject) => {
+    Topic.findById(topic_id, (err, result) => {
+      if (err) reject(err);
+
+      resolve(result);
+    })
+  });
+}
+
 const userCtrl = {
   async getTopics(ctx) {
     const { page, limit, tab } = ctx.query;
@@ -180,28 +210,38 @@ const userCtrl = {
         collections = await fintCollection({ topic_id: id, author_id });
       }
       const updateResult = await updateTopic({_id: id});
-      const findResult = await findTopic({_id: id}, {}, 1, 0);
+      const detail = await findTopicById(id);
       const replies = await getCommentByTopic({topic_id: id});
-      ctx.status = 200;
-      const [ detail ] = findResult;
-      const topic = _.pick(detail, ['id', 'author_id', 'tab', 'content', 'title', 'last_reply_at', 'last_reply','good', 'top', 'reply_count', 'visit_count', 'create_at', 'author', 'last_reply']);
-      let promises = replies.map((reply) => {
-        return findUserById(reply.author_id).then(author => {
-          reply =  _.pick(reply, ['id', 'author', 'author_id', 'content', 'ups', 'create_at', 'reply_id']);
-          reply.reply_id = reply.reply_id || null;
-    
-          if (reply.ups && id && reply.ups.includes(id)) {
-            reply.is_uped = true;
-          } else {
-            reply.is_uped = false;
-          }
-          reply.author = _.pick(author, ['loginname', 'avatar_url']);
-          return reply;
-        })
-      });
-      topic.replies = await Promise.all(promises);
-      topic.is_collect = !!collections && !!collections.length;
-      ctx.body = topic;
+      if (!detail) {
+        ctx.status = 200;
+        ctx.body = {
+          success: false,
+          message: '文章已经不存在',
+        };
+      } else {
+        ctx.status = 200;
+        const topic = _.pick(detail, ['id', 'author_id', 'tab', 'content', 'title', 'last_reply_at', 'last_reply','good', 'top', 'reply_count', 'visit_count', 'create_at', 'author', 'last_reply']);
+        let promises = replies.map((reply) => {
+          return findUserById(reply.author_id).then(author => {
+            reply =  _.pick(reply, ['id', 'author', 'author_id', 'content', 'ups', 'create_at', 'reply_id']);
+            reply.reply_id = reply.reply_id || null;
+      
+            if (reply.ups && id && reply.ups.includes(id)) {
+              reply.is_uped = true;
+            } else {
+              reply.is_uped = false;
+            }
+            reply.author = _.pick(author, ['loginname', 'avatar_url']);
+            return reply;
+          })
+        });
+        topic.replies = await Promise.all(promises);
+        topic.is_collect = !!collections && !!collections.length;
+        ctx.body = {
+          success: true,
+          topic,
+        };
+      }
     } catch (err) {
       ctx.status = 500;
       ctx.body = err.message;
@@ -266,6 +306,32 @@ const userCtrl = {
       ctx.body = e.message;
     }
   },
+
+  async removeTopic(ctx) {
+    const { topic_id } = ctx.params;
+    try {
+      const findTopic = await findTopicById(topic_id);
+      if (!findTopic) {
+        ctx.status = 200;
+        ctx.body = {
+          success: false,
+          message: '文章已不存在',
+        };
+      } else {
+        const removeResult = await deleteTopic({ _id: topic_id });
+        const removeCommet = await removeReply({ topic_id });
+        if (removeResult.result.n && removeCommet.result.ok) {
+          ctx.status = 200;
+          ctx.body = {
+            success: true,
+            message: '删除成功',
+          };
+        }
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
 
   //图片上传，暂时不做😫
   /**

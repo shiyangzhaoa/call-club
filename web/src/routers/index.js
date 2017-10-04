@@ -30,6 +30,7 @@ const AppRouter = () => (
         <PrivateRoute path="/login" component={Login}/>
         <PrivateRoute path="/register" component={Register}/>
         <AuthRoute path='/create-topic' component={CreateTopic}/>
+        <AuthRoute path='/edit-topic/:topicId' component={CreateTopic}/>
         <AuthRoute path='/setting' component={Setting}></AuthRoute>
         <Route component={NoMatch}/>
       </Switch>

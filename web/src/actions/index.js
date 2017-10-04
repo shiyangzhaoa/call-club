@@ -58,6 +58,9 @@ import {
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAILED,
+  DELETE_TOPIC_REQUEST,
+  DELETE_TOPIC_SUCCESS,
+  DELETE_TOPIC_FAILED,
 } from './../apis';
 
 const url = '/api';
@@ -251,11 +254,18 @@ export const getTopicDetail = (id) => (dispatch) => {
   axios.get(`${url}/topics/${id}`).then(({
     data,
   }) => {
-    dispatch({
-      type: GET_TOPIC_DETAIL_SUCCESS,
-      topicDetail: data,
-      status: 'succ',
-    })
+    if (!data.success) {
+      dispatch({
+        type: GET_TOPIC_DETAIL_SUCCESS,
+        status: 'cantFind',
+      })
+    } else {
+      dispatch({
+        type: GET_TOPIC_DETAIL_SUCCESS,
+        topicDetail: data.topic,
+        status: 'succ',
+      })
+    }
   }).catch(err => {
     console.log(err);
     if (err.response) {
@@ -610,6 +620,39 @@ export const changePass = (body) => (dispatch) => {
     } else {
       dispatch({
         type: UPDATE_PASSWORD_FAILED,
+        status: 'netErr',
+      })
+    }
+  })
+}
+
+//删除话题
+export const deleteTopic = (topic_id) => (dispatch) => {
+  dispatch({
+    type: DELETE_TOPIC_REQUEST,
+    status: 'pending',
+  })
+  axios.delete(`${url}/topic/${topic_id}/delete`).then(({ data }) => {
+    if (data.success) {
+      dispatch({
+        type: DELETE_TOPIC_SUCCESS,
+        status: 'succ',
+      })
+    } else {
+      dispatch({
+        type: DELETE_TOPIC_FAILED,
+        status: 'cantFind',
+      })
+    }
+  }).catch(err => {
+    if (err.response) {
+      dispatch({
+        type: DELETE_TOPIC_FAILED,
+        status: 'timeOut',
+      })
+    } else {
+      dispatch({
+        type: DELETE_TOPIC_FAILED,
         status: 'netErr',
       })
     }
