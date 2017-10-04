@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Form, Input, Button, Select } from 'antd';
+import { Form, Input, Button, Select, message } from 'antd';
 //import axios from 'axios';
 import ReactQuill from 'react-quill';
 
@@ -64,25 +64,40 @@ class CreateTopic extends Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const { actions } = this.props;
-        actions.createTopic({
-          tab: values.tab,
-          title: values.title,
-          content: this.state.text,
-        })
+        const { topicId } = this.props.match.params;
+        if (topicId) {
+          console.log('修改');
+        } else {
+          actions.createTopic({
+            tab: values.tab,
+            title: values.title,
+            content: this.state.text,
+          })
+        }
       }
     });
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.createTopicStatus !== this.props.createTopicStatus && nextProps.createTopicStatus === 'succ') {
+    const { createTopicStatus, getTopicDetailStatus, topic_detail, history } = nextProps;
+    if (createTopicStatus !== this.props.createTopicStatus && nextProps.createTopicStatus === 'succ') {
       this.props.history.push('/');
+    }
+
+    if (getTopicDetailStatus !== this.props.getTopicDetailStatus && getTopicDetailStatus === 'succ') {
+      this.setState({
+        text: topic_detail.content,
+      })
+    } else if (getTopicDetailStatus !== this.props.getTopicDetailStatus && getTopicDetailStatus === 'cantFind') {
+      message.error('话题不存在！！！');
+      history.goBack(-1);
     }
   }
   componentDidMount() {
     const { topicId } = this.props.match.params;
     const { actions } = this.props;
+    topicId && actions.getTopicDetail(topicId);
   }
   render() {
-    console.log(this.props);
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -94,6 +109,8 @@ class CreateTopic extends Component {
       },
     };
     const { getFieldDecorator } = this.props.form;
+    const { topic_detail } = this.props;
+    const { topicId } = this.props.match.params;
     return (
       <div>
         <Header backTo='/' back='首页' now='创建' />
@@ -103,7 +120,7 @@ class CreateTopic extends Component {
             label="选择板块："
           >
             {getFieldDecorator('tab', {
-              initialValue: 'ask',
+              initialValue: (topicId && topic_detail && topic_detail.tab) || 'ask',
             })(
               <Select>
                 <Option value="ask">问答</Option>
@@ -122,6 +139,7 @@ class CreateTopic extends Component {
                 { required: true, message: '请输入标题!', whitespace: true },
                 { min: 10, message: '字数不能少于十字' },
               ],
+              initialValue: (topicId && topic_detail && topic_detail.title) || '',
             })(
               <Input />
               )}
@@ -145,6 +163,8 @@ CreateTopic.propTypes = {
     createTopic: PropTypes.func,
   }),
   createTopicStatus: PropTypes.string,
+  topic_detail: PropTypes.object,
+  getTopicDetailStatus: PropTypes.string,
 };
 
 const CreateTopicCom = Form.create()(CreateTopic);
@@ -152,6 +172,8 @@ const CreateTopicCom = Form.create()(CreateTopic);
 function mapStateToProps(state) {
   const props = {
     createTopicStatus: state.topic.createTopicStatus,
+    topic_detail: state.topic.topic_detail,
+    getTopicDetailStatus: state.topic.getTopicDetailStatus,
   };
   return props;
 }

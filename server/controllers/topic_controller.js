@@ -309,6 +309,7 @@ const userCtrl = {
 
   async removeTopic(ctx) {
     const { topic_id } = ctx.params;
+    const { id } = ctx.api_user;
     try {
       const findTopic = await findTopicById(topic_id);
       if (!findTopic) {
@@ -318,7 +319,7 @@ const userCtrl = {
           message: '文章已不存在',
         };
       } else {
-        const removeResult = await deleteTopic({ _id: topic_id });
+        const removeResult = await deleteTopic({ _id: topic_id, author_id: id });
         const removeCommet = await removeReply({ topic_id });
         if (removeResult.result.n && removeCommet.result.ok) {
           ctx.status = 200;

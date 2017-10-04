@@ -193,6 +193,9 @@ class TopicDetail extends Component {
     const { actions } = this.props;
     actions.deleteTopic(topic_id);
   }
+  gotoEdit = (topic_id) => {
+    this.props.history.push(`/edit-topic/${topic_id}`);
+  }
   render() {
     const { topic_detail, info, getInfoStatus, auth, noReplyTopic, noReplyStatus } = this.props;
     if (topic_detail) {
@@ -238,7 +241,7 @@ class TopicDetail extends Component {
                     }
                     { auth.id === topic_detail.author_id &&
                       <Tooltip title="编辑该话题">
-                        <a style={{ marginLeft: '20px'}}>
+                        <a style={{ marginLeft: '20px'}} onClick={() => this.gotoEdit(topic_detail.id)}>
                           <Icon type="edit" style={{ fontSize: 18, color: '#000' }}/>
                         </a>
                       </Tooltip>

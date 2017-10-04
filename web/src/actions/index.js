@@ -568,7 +568,6 @@ export const markAll = () => (dispatch) => {
 
 //更新基本信息
 export const updateSetting = (body) => (dispatch) => {
-  console.log(body);
   dispatch({
     type: UPDATE_SETTING_REQUEST,
     status: 'pending',
