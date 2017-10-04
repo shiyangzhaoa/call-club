@@ -66,7 +66,6 @@ class CreateTopic extends Component {
         const { actions, topic_detail } = this.props;
         const { topicId } = this.props.match.params;
         if (topicId) {
-          console.log('修改');
           actions.updateTopic({
             id: topic_detail.id,
             tab: values.tab,
