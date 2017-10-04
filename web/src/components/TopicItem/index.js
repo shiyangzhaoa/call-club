@@ -3,7 +3,7 @@ import { Card } from 'antd';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import './topic-item.scss';
+import './index.scss';
 
 const TopicItem = (props) => {
   const style = {

@@ -11,10 +11,10 @@ import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
 import ReactQuill from 'react-quill';
 
-import Comment from './../components/Comment';
-import Header from './../components/Header';
-import * as actions from './../actions';
-import './topic-detail.scss';
+import Comment from './../../components/Comment';
+import Header from './../../components/Header';
+import * as actions from './../../actions';
+import './index.scss';
 
 const modules = {
   toolbar: [

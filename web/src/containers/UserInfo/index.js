@@ -9,9 +9,9 @@ import { Card } from 'antd';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-import NavBar from './../components/NavBar';
-import * as actions from './../actions';
-import './user-info.scss';
+import NavBar from './../../components/NavBar';
+import * as actions from './../../actions';
+import './index.scss';
 
 class UserInfo extends Component {
   componentWillReceiveProps(nextProps) {

@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux';
 import { Spin, Card, Pagination } from 'antd';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import * as actions from './../actions';
-import TopicItem from './../components/TopicItem';
+import * as actions from './../../actions';
+import TopicItem from './../../components/TopicItem';
 
 class CategoryList extends Component {
   componentWillReceiveProps(nextProps) {

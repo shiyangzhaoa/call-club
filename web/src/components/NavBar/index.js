@@ -7,7 +7,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actions from './../actions';
+import * as actions from './../../actions';
 
 const { Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;

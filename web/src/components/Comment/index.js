@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import ReactMarkdown from 'react-markdown';
 
-import './comment.scss';
+import './index.scss';
 
 const Comment = props => {
   const style = {

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import './no-match.scss';
-import NotFound from './../sources/404.jpg';
-import Crow from './../sources/crow.jpg';
-import Point from './../sources/dian.svg';
+import './index.scss';
+import NotFound from './../../sources/404.jpg';
+import Crow from './../../sources/crow.jpg';
+import Point from './../../sources/dian.svg';
 
 class NoMatch extends React.Component {
 

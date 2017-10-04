@@ -6,9 +6,9 @@ import { withRouter } from 'react-router';
 import { Form, Input, Button, message, Card } from 'antd';
 import md5 from 'md5';
 
-import Header from './../components/Header';
-import * as actions from './../actions';
-import './settings.scss';
+import Header from './../../components/Header';
+import * as actions from './../../actions';
+import './index.scss';
 
 const FormItem = Form.Item;
 

@@ -4,8 +4,8 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import NavBar from './../components/NavBar';
-import CategoryList from './CategoryList';
+import NavBar from './../../components/NavBar';
+import CategoryList from './../CategoryList';
 
 const Home = (pros) => {
   return (

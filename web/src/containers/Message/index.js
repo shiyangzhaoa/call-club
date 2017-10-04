@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Card, Button } from 'antd';
 
-import NavBar from './../components/NavBar';
-import * as actions from './../actions';
-import './message.scss';
+import NavBar from './../../components/NavBar';
+import * as actions from './../../actions';
+import './index.scss';
 
 class Message extends Component {
   componentWillReceiveProps(nextProps) {

@@ -8,10 +8,10 @@ import { withRouter } from 'react-router';
 import { message, Form, Input, Tooltip, Icon, Row, Col, Checkbox, Button } from 'antd';
 import md5 from 'md5';
 
-import Steps from './../components/Steps';
-import Header from './../components/Header';
-import * as actions from './../actions';
-import './register.scss';
+import Steps from './../../components/Steps';
+import Header from './../../components/Header';
+import * as actions from './../../actions';
+import './index.scss';
 
 const FormItem = Form.Item;
 

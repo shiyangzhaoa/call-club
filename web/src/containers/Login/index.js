@@ -6,10 +6,10 @@ import { withRouter } from 'react-router';
 import { Form, Icon, Input, Button, notification } from 'antd';
 import md5 from 'md5';
 
-import './login.scss';
-import Steps from './../components/Steps';
-import Header from './../components/Header';
-import * as actions from './../actions';
+import './index.scss';
+import Steps from './../../components/Steps';
+import Header from './../../components/Header';
+import * as actions from './../../actions';
 
 const steps = [
   { title: '登陆', finshed: true },

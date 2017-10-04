@@ -7,8 +7,8 @@ import { Form, Input, Button, Select } from 'antd';
 //import axios from 'axios';
 import ReactQuill from 'react-quill';
 
-import * as actions from './../actions';
-import Header from './../components/Header';
+import * as actions from './../../actions';
+import Header from './../../components/Header';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
