@@ -193,6 +193,7 @@ const userCtrl = {
             avatar_url: auth.avatar_url,
           },
           create_at: new Date(),
+          last_reply_at: new Date(),
         });
         const createResult = await createTopic(newTopic);
         ctx.body = {

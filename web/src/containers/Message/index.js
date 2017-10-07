@@ -13,8 +13,11 @@ import './index.scss';
 
 class Message extends Component {
   componentWillReceiveProps(nextProps) {
-    const { actions, markAllStatus } = this.props;
-    if (nextProps.markAllStatus !== markAllStatus && nextProps.markAllStatus === 'succ') {
+    const { actions, markAllStatus, markOneStatus } = nextProps;
+    if (markAllStatus !== this.props.markAllStatus && markAllStatus === 'succ') {
+      actions.getMessages();
+    }
+    if (markOneStatus !== this.props.markOneStatus && markOneStatus === 'succ') {
       actions.getMessages();
     }
   }
