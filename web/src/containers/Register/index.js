@@ -17,8 +17,8 @@ const FormItem = Form.Item;
 
 const steps = [
   { title: '填写你的信息', finshed: true },
-  { title: '签订契约', finshed: false },
-  { title: '扎上双马尾', finshed: false },
+  { title: '信息为真', finshed: false },
+  { title: '验证通过', finshed: false },
   { title: '成为马猴烧酒', finshed: false },
   { title: '拯救人类', finshed: false },
 ]
@@ -211,7 +211,7 @@ class Register extends Component {
                 )}
             </FormItem>
             <FormItem {...tailFormItemLayout}>
-              <Button type="primary" htmlType="submit">签订</Button>
+              <Button type="primary" htmlType="submit">注册</Button>
             </FormItem>
           </Form>
         </div>
