@@ -6,6 +6,7 @@ import {
   CREAT_TOPIC_SUCCESS,
   CREAT_TOPIC_FAILED,
   GET_TOPIC_DETAIL_REQUSET,
+  INIT_TOPIC_DETAIL,
   GET_TOPIC_DETAIL_SUCCESS,
   GET_TOPIC_DETAIL_FAILED,
   GET_COLLECT_REQUEST,
@@ -51,8 +52,10 @@ export default function topic (state = initState, action) {
     case CREAT_TOPIC_FAILED:
       return Object.assign({}, state, { createTopicStatus: action.status });
     case GET_TOPIC_DETAIL_REQUSET:
+      return state;
     case GET_TOPIC_DETAIL_SUCCESS:
     case GET_TOPIC_DETAIL_FAILED:
+    case INIT_TOPIC_DETAIL:
       return Object.assign({}, state, { topic_detail: action.topicDetail, getTopicDetailStatus: action.status });
     case GET_COLLECT_REQUEST:
     case GET_COLLECT_SUCCESS:

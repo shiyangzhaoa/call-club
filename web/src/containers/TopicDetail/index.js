@@ -53,6 +53,12 @@ class TopicDetail extends Component {
     replyArr: [],
     upIndex: -1,
   }
+  componentWillMount() {
+    const { topic_detail, actions } = this.props;
+    if (topic_detail) {
+      actions.initTopic();
+    }
+  }
   componentWillReceiveProps(nextProps) {
     const { match, topic_detail, actions, getTopicDetailStatus, commitStatus, collectStatus, cancelStatus, upStatus, status, auth, delReplyStatus, deleteTopicStatus } = nextProps;
     if (getTopicDetailStatus !== this.props.getTopicDetailStatus && getTopicDetailStatus === 'succ' && status === 'succ') {

@@ -64,6 +64,7 @@ import {
   UPDATE_TOPIC_REQUEST,
   UPDATE_TOPIC_SUCCESS,
   UPDATE_TOPIC_FAILED,
+  INIT_TOPIC_DETAIL,
 } from './../apis';
 
 const url = '/api';
@@ -283,6 +284,15 @@ export const getTopicDetail = (id) => (dispatch) => {
       });
     }
   });
+}
+
+//不同的文章详情初始化数据
+export const initTopic = () => (dispatch) => {
+  dispatch({
+    type: INIT_TOPIC_DETAIL,
+    topicDetail: null,
+    status: 'init',
+  })
 }
 
 //评价
