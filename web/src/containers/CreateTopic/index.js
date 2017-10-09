@@ -115,7 +115,7 @@ class CreateTopic extends Component {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 4 },
+        sm: { span: 5 },
       },
       wrapperCol: {
         xs: { span: 24 },
@@ -128,7 +128,7 @@ class CreateTopic extends Component {
     return (
       <div>
         <Header backTo='/' back='首页' now='创建' />
-        <Form style={{ margin: '20px 300px' }} onSubmit={this.handleSubmit}>
+        <Form style={{ margin: '20px auto', minWidth: 370, maxWidth: '66%' }} onSubmit={this.handleSubmit}>
           <FormItem
             {...formItemLayout}
             label="选择板块："

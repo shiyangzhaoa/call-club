@@ -139,7 +139,6 @@ const userCtrl = {
         const recent_topics = await findTopic({ author_id: userInfo.id });
         userInfo.recent_topics = recent_topics.map(item => _.pick(item, ['id', 'author', 'title', 'last_reply_at', 'reply_count', 'visit_count']));
         const replies = await findComment({ author_id: userInfo.id });
-        //转成字符串，这个坑我看半天...
         let replyTopicIds = replies.map(item => item.topic_id.toString());
         replyTopicIds = _.uniq(replyTopicIds);
         const recent_replies = await findTopic({ _id: {'$in': replyTopicIds} });

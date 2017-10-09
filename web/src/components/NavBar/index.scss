@@ -1,0 +1,25 @@
+.nav-bar {
+  height: 100vh;
+}
+@media (max-width: 1000px) {
+  .pc {
+    display: none;
+  }
+
+  .menu {
+    line-height: 64px;
+  }
+
+  .ant-layout.ant-layout-has-sider {
+    flex-direction: column;
+  }
+}
+@media (min-width: 1000px) {
+  .mobile {
+    display: none;
+  }
+
+  .ant-layout.ant-layout-has-sider {
+    flex-direction: row;
+  }
+}

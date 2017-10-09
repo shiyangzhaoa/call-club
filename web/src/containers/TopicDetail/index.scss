@@ -6,7 +6,6 @@
 
   .topic-info {
     flex: 7;
-    min-width: 800px;
 
     .topic-item {
       margin-top: 20px;
@@ -98,5 +97,15 @@
   
   .ant-card-head-title {
     width: 100%;
+  }
+
+  @media (max-width: 1000px) {
+    .topic-detail {
+      flex-direction: column;
+    }
+  
+    .article {
+      margin: 0;
+    }
   }
 }

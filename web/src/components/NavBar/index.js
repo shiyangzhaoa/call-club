@@ -9,7 +9,9 @@ import { bindActionCreators } from 'redux';
 
 import * as actions from './../../actions';
 
-const { Content, Footer, Sider } = Layout;
+import './index.scss';
+
+const { Content, Footer, Sider, Header } = Layout;
 const SubMenu = Menu.SubMenu;
 
 class NavBar extends Component {
@@ -97,11 +99,12 @@ class NavBar extends Component {
       pageNow = '个人信息';
     }
     return (
-      <Layout style={{ height: '100vh' }}>
+      <Layout className="nav-bar">
         <Sider
           collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
+          className="pc"
         >
           <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onSelect={this.selectTab}>
@@ -158,6 +161,62 @@ class NavBar extends Component {
             )}
           </Menu>
         </Sider>
+        <Header className="mobile">
+          <div className="logo" />
+          <Menu theme="dark" defaultSelectedKeys={['1']} mode="horizontal" onSelect={this.selectTab} className="menu">
+            <Menu.Item key="home"  className={(match.path === '/' || match.path === '/page/:pageNum?' || match.params.categorySlug === 'all') && 'ant-menu-item-selected'}>
+              <Icon type="home" />
+              <span>首页</span>
+            </Menu.Item>
+            {this.state.hasLogin && (
+              <Menu.Item className={match.url === '/message' && 'ant-menu-item-selected'} key="message">
+                <Icon type="notification" />
+                <span>消息</span>
+                {
+                  !!count && 
+                  <span style={{ display: 'inline-block', padding: "3px 8px", backgroundColor: "#A9BBDC", marginLeft: '40px', lineHeight: '9px', borderRadius: '30px' }}>{count}</span>
+                }
+              </Menu.Item>
+            )}
+            <SubMenu
+              key="sub1"
+              title={<span><Icon type="tag-o" /><span>分类</span></span>}
+            >
+              <Menu.Item key="good" className={match.params.categorySlug === 'good' && 'ant-menu-item-selected'}>精华</Menu.Item>
+              <Menu.Item key="share" className={match.params.categorySlug === 'share' && 'ant-menu-item-selected'}>分享</Menu.Item>
+              <Menu.Item key="ask" className={match.params.categorySlug === 'ask' && 'ant-menu-item-selected'}>问答</Menu.Item>
+              <Menu.Item key="job" className={match.params.categorySlug === 'job' && 'ant-menu-item-selected'}>招聘</Menu.Item>
+            </SubMenu>
+            {!this.state.hasLogin && (
+              <Menu.Item key="login">
+                <Icon type="login" />
+                <span>登陆</span>
+              </Menu.Item>
+            )}
+            {!this.state.hasLogin && (
+              <Menu.Item key="register">
+                <Icon type="plus-circle-o" />
+                <span>注册</span>
+              </Menu.Item>
+            )}
+            {this.state.hasLogin && (
+              <Menu.Item key="userInfo" className={match.path === '/user-info/:loginname' && 'ant-menu-item-selected'}>
+                <Icon type="user" />
+                <span>个人信息</span>
+              </Menu.Item>
+            )}
+            {this.state.hasLogin && (
+              <SubMenu
+              key="sub2"
+              title={<span><Icon type="setting" /><span>操作</span></span>}
+            >
+                <Menu.Item key="createTopic">创建新话题</Menu.Item>
+                <Menu.Item key="setting">设置</Menu.Item>
+                <Menu.Item key="signout">退出</Menu.Item>
+              </SubMenu>
+            )}
+          </Menu>
+        </Header>
         <Layout>
           <Content style={{ margin: '0 16px' }}>
             <Breadcrumb style={{ margin: '12px 0' }}>

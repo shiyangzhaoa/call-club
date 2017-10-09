@@ -80,16 +80,6 @@ const createMessage = (body) => {
   });
 }
 
-const removeMessage = (query) => {
-  return new Promise((resolve, reject) => {
-    Message.remove(query, (err, result) => {
-      if (err) reject(err);
-
-      resolve(result);
-    })
-  });
-}
-
 const commentCtrl = {
   async create(ctx) {
     const author_id = ctx.api_user.id;
@@ -159,7 +149,6 @@ const commentCtrl = {
     try {
       const findResult = await findCommentById(reply_id);
       const removeResult = await removeReply({ _id: reply_id });
-      console.log(findResult);
       const updateResult = await updateTopic(findResult.topic_id.toString(), findResult.author_id, -1);
       if (removeResult.result.ok && updateResult.ok) {
         ctx.status = 200;

@@ -61,7 +61,7 @@ class UserInfo extends Component {
                   info.recent_topics.map(item => (
                     <li key={item.id} className="user-topic-item">
                       <div className="topic-title"><Link to={`/topics/${item.id}`}>{item.title}</Link></div>
-                      <div className="topic-count">{item.visit_count}条浏览 • {item.reply_count}条回复 • {item.fromNow}</div>
+                      <div className="topic-count">{item.visit_count}条浏览 • {item.reply_count}条回复 • 最后回复于{item.fromNow}</div>
                     </li>
                   ))
                   : <li className="user-topic-item">未发表过话题</li>
@@ -74,7 +74,7 @@ class UserInfo extends Component {
                   info.recent_replies.map(item => (
                     <li key={item.id} className="user-topic-item">
                       <div className="topic-title"><Link to={`/topics/${item.id}`}>{item.title}</Link></div>
-                      <div className="topic-count">{item.visit_count}条浏览 • {item.reply_count}条回复 • {item.fromNow}</div>
+                      <div className="topic-count">{item.visit_count}条浏览 • {item.reply_count}条回复 • 最后回复于{item.fromNow}</div>
                     </li>
                   ))
                   : <li className="user-topic-item">未回复过话题</li>

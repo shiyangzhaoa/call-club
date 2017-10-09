@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Card, Button } from 'antd';
+import { Card, Button, message } from 'antd';
 
 import NavBar from './../../components/NavBar';
 import * as actions from './../../actions';
@@ -31,8 +31,12 @@ class Message extends Component {
     topic_id && this.props.history.push(`/topics/${topic_id}`);
   }
   markAll = () => {
-    const { actions } = this.props;
-    actions.markAll();
+    const { actions, messages } = this.props;
+    if (messages.data.has_not_read_messages.length) {
+      actions.markAll();
+    } else {
+      message.error('无未读消息');
+    } 
   }
   render() {
     const has_read_messages = this.props.messages && this.props.messages.data.has_read_messages;
