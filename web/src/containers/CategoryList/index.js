@@ -33,8 +33,8 @@ class CategoryList extends Component {
     }
   }
   componentDidMount() {
-    const { actions, topics } = this.props;
-    !topics && actions.getTopics({
+    const { actions } = this.props;
+    actions.getTopics({
       page: this.getPageNow(),
       tab: this.getSlug()
     });
