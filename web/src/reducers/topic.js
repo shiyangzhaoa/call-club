@@ -27,7 +27,7 @@ import {
 } from './../apis';
 
 const initState = {
-  topics: {},
+  topics: null,
   limit: 0,
   getTopicStatus: '',
   createTopicStatus: '',

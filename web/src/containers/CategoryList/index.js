@@ -33,8 +33,8 @@ class CategoryList extends Component {
     }
   }
   componentDidMount() {
-    const { actions } = this.props;
-    actions.getTopics({
+    const { actions, topics } = this.props;
+    !topics && actions.getTopics({
       page: this.getPageNow(),
       tab: this.getSlug()
     });
@@ -72,7 +72,6 @@ class CategoryList extends Component {
   }
   render() {
     const { topics, getTopicStatus } = this.props;
-    const { list, count } = topics;
     if (getTopicStatus === 'pending') {
       return (
         <Spin tip="Loading...">
@@ -82,6 +81,7 @@ class CategoryList extends Component {
         </Spin>
       );
     } else if (getTopicStatus === 'succ') {
+      const { list, count } = topics;
       if (list.length) {
         return (
           <div>
