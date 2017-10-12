@@ -61,7 +61,7 @@ class TopicDetail extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { match, topic_detail, actions, getTopicDetailStatus, commitStatus, collectStatus, cancelStatus, upStatus, status, auth, delReplyStatus, deleteTopicStatus } = nextProps;
-    if (getTopicDetailStatus !== this.props.getTopicDetailStatus && getTopicDetailStatus === 'succ' && status === 'succ') {
+    if (getTopicDetailStatus !== this.props.getTopicDetailStatus && getTopicDetailStatus === 'succ') {
       const replyArr = topic_detail.replies.map(item => item.ups);
       this.setState({
         is_collect: topic_detail.is_collect,
