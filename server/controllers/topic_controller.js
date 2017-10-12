@@ -8,7 +8,7 @@ const Topic = require('./../models/topic');
 const User = require('./../models/user');
 const Comment = require('./../models/comment');
 const Message = require('./../models/message');
-const TopicCollect = require('./../models/Topic_collect');
+const TopicCollect = require('./../models/topic_collect');
 //const gravatar = require('gravatar');
 
 const findTopic = function (obj, filter, limit, skip) {
