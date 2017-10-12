@@ -25,6 +25,7 @@ const initState = {
 export default function commitComment(state=initState, action) {
   switch(action.type) {
     case GET_MESSAGE_COUNT_REQUEST:
+      return state;
     case GET_MESSAGE_COUNT_SUCCESS:
     case GET_MESSAGE_COUNT_FAILED:
       return Object.assign({}, state, { messageCountStatus: action.status, count: action.count });

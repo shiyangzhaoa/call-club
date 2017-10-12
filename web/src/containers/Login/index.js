@@ -27,7 +27,7 @@ class Login extends React.Component {
     if (this.props.loginStatus !== nextprops.loginStatus && nextprops.loginStatus === 'passErr') {
       notification.open({
         message: '密码错误',
-        description: '很严重的错误，我想很可能是你输错密码了~',
+        description: '很严重的错误，如果你账号没记错的话，我想很可能是你输错密码了~',
         style: {
           width: 600,
           marginLeft: 335 - 600,

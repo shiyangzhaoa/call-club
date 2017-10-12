@@ -17,7 +17,7 @@ const findOne = (query, filter={}) => {
 
 const createOne = (body) => {
   return new Promise((resolve, reject) => {
-    const newUser = new User(Object.assign(body, { avatar_url: `http:${gravatar.url(body.email)}` }));
+    const newUser = new User(Object.assign(body, { avatar_url: `https:${gravatar.url(body.email)}` }));
     newUser.save(function(err, info) {
       if (err) reject(err);
     
