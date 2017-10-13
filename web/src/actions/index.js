@@ -411,6 +411,7 @@ export const upReply = (reply_id) => (dispatch) => {
       throw new Error('错误');
     }
   }).catch(err => {
+    console.log(err,'33');
     if (err.response) {
       dispatch({
         type: UP_REPLY_FAILD,

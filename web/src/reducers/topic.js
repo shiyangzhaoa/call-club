@@ -52,7 +52,7 @@ export default function topic (state = initState, action) {
     case CREAT_TOPIC_FAILED:
       return Object.assign({}, state, { createTopicStatus: action.status });
     case GET_TOPIC_DETAIL_REQUSET:
-      return state;
+    return Object.assign({}, state, { getTopicDetailStatus: action.status });
     case GET_TOPIC_DETAIL_SUCCESS:
     case GET_TOPIC_DETAIL_FAILED:
     case INIT_TOPIC_DETAIL:
