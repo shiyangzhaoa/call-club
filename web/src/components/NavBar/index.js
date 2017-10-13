@@ -118,7 +118,7 @@ class NavBar extends Component {
                 <span>消息</span>
                 {
                   !!count && 
-                  <span style={{ display: 'inline-block', padding: "3px 8px", backgroundColor: "#A9BBDC", marginLeft: '40px', lineHeight: '9px', borderRadius: '30px' }}>{count}</span>
+                  <span style={{ padding: "2px 8px", backgroundColor: "#A9BBDC", marginLeft: '40px', lineHeight: '9px', borderRadius: '30px' }}>{count}</span>
                 }
               </Menu.Item>
             )}
