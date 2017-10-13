@@ -147,10 +147,18 @@ export const login = (query) => (dispatch) => {
     });
   }).catch(err => {
     if (err.response) {
-      dispatch({
-        type: LOGIN_FAILED,
-        status: 'passErr',
-      });
+      const { errCode } = err.response.data
+      if (errCode === 103) {
+        dispatch({
+          type: LOGIN_FAILED,
+          status: 'userErr',
+        });
+      } else if (errCode === 102) {
+        dispatch({
+          type: LOGIN_FAILED,
+          status: 'passErr',
+        });
+      }
     } else {
       dispatch({
         type: LOGIN_FAILED,

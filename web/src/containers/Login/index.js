@@ -27,10 +27,19 @@ class Login extends React.Component {
     if (this.props.loginStatus !== nextprops.loginStatus && nextprops.loginStatus === 'passErr') {
       notification.open({
         message: '密码错误',
-        description: '很严重的错误，如果你账号没记错的话，我想很可能是你输错密码了~',
+        description: '很严重的错误，我想很可能是你输错密码了~',
         style: {
-          width: 600,
-          marginLeft: 335 - 600,
+          width: 300,
+          marginLeft: 335 - 300,
+        },
+      });
+    } else if(this.props.loginStatus !== nextprops.loginStatus && nextprops.loginStatus === 'userErr') {
+      notification.open({
+        message: '用户不存在',
+        description: '请检查用户名，这个应该不是我们这边的...',
+        style: {
+          width: 300,
+          marginLeft: 335 - 300,
         },
       });
     } else if(this.props.loginStatus !== nextprops.loginStatus && nextprops.loginStatus === 'netErr') {
@@ -38,8 +47,8 @@ class Login extends React.Component {
         message: '网络错误',
         description: '如果是我的服务器挂了，这个锅我背，也有可能是你没有连接网络.',
         style: {
-          width: 600,
-          marginLeft: 335 - 600,
+          width: 400,
+          marginLeft: 335 - 400,
         },
       });
     }

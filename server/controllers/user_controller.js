@@ -85,6 +85,7 @@ const userCtrl = {
         ctx.body = {
           message: 'loginname已存在',
           succ: false,
+          errCode: 101,
         };
       }
     } catch (e) {
@@ -113,6 +114,7 @@ const userCtrl = {
           ctx.body = {
             message: '密码错误',
             succ: false,
+            errCode: 102,
           };
         }
       } else {
@@ -120,6 +122,7 @@ const userCtrl = {
         ctx.body = {
           message: '用户不存在',
           succ: false,
+          errCode: 103,
         };
       }
     } catch (e) {
@@ -149,7 +152,8 @@ const userCtrl = {
         ctx.status = 200;
         ctx.body = {
           succ: false,
-          message: '用户不存在'
+          message: '用户不存在',
+          errCode: 103,
         };
       }
     } catch (e) {
@@ -169,7 +173,8 @@ const userCtrl = {
         ctx.status = 200;
         ctx.body = {
           succ: false,
-          message: '用户不存在'
+          message: '用户不存在',
+          errCode: 103,
         };
       }
     } catch (e) {
@@ -204,6 +209,7 @@ const userCtrl = {
         ctx.body = {
           success: false,
           message: '原始密码错误',
+          errCode: 104,
         };
       } else {
         author.password = reqBody.newpass;

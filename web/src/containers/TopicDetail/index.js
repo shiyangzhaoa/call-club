@@ -47,7 +47,6 @@ class TopicDetail extends Component {
     content: '',
     replyId: undefined,
     commentId: undefined,
-    loading: false,
     is_collect: false,
     login_token: localStorage.getItem('login_token'),
     replyArr: [],
@@ -81,7 +80,6 @@ class TopicDetail extends Component {
         content: '',
         replyId: undefined,
         commentId: undefined,
-        loading: false,
       })
       actions.getTopicDetail(match.params.id);
     }
@@ -163,9 +161,6 @@ class TopicDetail extends Component {
       message.error('内容不能为空');
       return false;
     }
-    this.setState({
-      loading: true
-    })
     actions.commitComment(topic_id, content, reply_id);
   }
   collect = () => {
@@ -185,11 +180,13 @@ class TopicDetail extends Component {
     }
   }
   upReply = (reply_id, index) => {
-    const { actions } = this.props;
-    actions.upReply(reply_id);
-    this.setState({
-      upIndex: index,
-    })
+    const { actions, upStatus } = this.props;
+    if (upStatus !== 'pending') {
+      actions.upReply(reply_id);
+      this.setState({
+        upIndex: index,
+      })
+    }
   }
   deleteReply = (author_id) => {
     const { actions } = this.props;
@@ -203,7 +200,7 @@ class TopicDetail extends Component {
     this.props.history.push(`/edit-topic/${topic_id}`);
   }
   render() {
-    const { topic_detail, info, getInfoStatus, auth, noReplyTopic, noReplyStatus } = this.props;
+    const { topic_detail, info, getInfoStatus, auth, noReplyTopic, noReplyStatus, collectStatus, cancelStatus, commitStatus } = this.props;
     if (topic_detail) {
       topic_detail.create_time = moment(topic_detail.create_at).format('YYYY-MM-DD');
       if (topic_detail.tab === 'ask') {
@@ -231,7 +228,7 @@ class TopicDetail extends Component {
                         {topic_detail.level && <span className="topic-level">{topic_detail.level}</span>}
                         <span>{topic_detail.title}</span>
                       </div>
-                      <Button type="primary" onClick={this.collect}>{this.state.is_collect ? '取消收藏' : '收藏'}</Button>
+                      <Button type="primary" loading={collectStatus === 'pending' || cancelStatus === 'pending'} onClick={this.collect}>{this.state.is_collect ? '取消收藏' : '收藏'}</Button>
                     </div>
                   } bordered={false}>
                     <span className="info-item">{`发表于 ${topic_detail.create_time}`}</span>
@@ -278,7 +275,7 @@ class TopicDetail extends Component {
                               formats={formats}
                               defaultValue={`<a href="#/user-info/${item.author.loginname}">@${item.author.loginname}</href>`}
                               onChange={this.changeContent} />
-                            <Button className="reply-btn" type="primary" loading={this.state.loading} onClick={() => this.commit(topic_detail.id, this.state.replyId)}>回复</Button>
+                            <Button className="reply-btn" type="primary" loading={commitStatus === 'pending'} onClick={() => this.commit(topic_detail.id, this.state.replyId)}>回复</Button>
                           </Comment>
                         ))
                       }
@@ -292,10 +289,12 @@ class TopicDetail extends Component {
                       formats={formats}
                       value={this.state.content}
                       onChange={this.changeContent} />
-                    <Button className="reply-btn" type="primary" loading={this.state.loading} onClick={() => this.commit(topic_detail.id)}>回复</Button>
+                    <Button className="reply-btn" type="primary" loading={commitStatus === 'pending'} onClick={() => this.commit(topic_detail.id)}>回复</Button>
                   </Card>
                 </div>
-                : <div>加载中...<Icon type="loading" /></div>
+                : <Card loading style={{ width: '100%' }}>
+                    正在加载~
+                  </Card>
             }
           </div>
           <div className="article">

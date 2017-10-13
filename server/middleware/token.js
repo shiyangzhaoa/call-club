@@ -4,7 +4,7 @@ const getVerify = function (token) {
   return new Promise((resolve, reject) => {
     jwt.verify(token, 'app.get(user)', function (err, decoded) {
       if (err) {
-        reject(00);
+        reject(100);
       } else {
         resolve(decoded);
       }
@@ -20,11 +20,12 @@ const resolveToken = async function (ctx, next) {
       ctx.api_user = result;
       await next();
     } catch(e) {
-      if (e === 00) {
+      if (e === 100) {
         ctx.status = 401;
         ctx.body = {
           success: false,
           message: 'token过期',
+          errCode: 100,
         }
       } else {
         ctx.status = 500;
