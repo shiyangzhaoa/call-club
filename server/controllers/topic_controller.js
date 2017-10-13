@@ -76,7 +76,7 @@ const getCommentByTopic = id => {
       if (err) reject(err);
 
       resolve(replies);
-    })
+    }).sort({ 'create_at': 1 });
   })
 }
 

@@ -124,7 +124,7 @@ class TopicDetail extends Component {
       this.props.history.push('/');
     } else if (deleteTopicStatus !== this.props.deleteTopicStatus && deleteTopicStatus === 'cantFind') {
       message.error('文章已不存在');
-    } else if(deleteTopicStatus !== this.props.deleteTopicStatus && deleteTopicStatus === 'netErr') {
+    } else if (deleteTopicStatus !== this.props.deleteTopicStatus && deleteTopicStatus === 'netErr') {
       message.error('请检查网络或服务');
     }
   }
@@ -223,8 +223,8 @@ class TopicDetail extends Component {
         <div className="topic-detail">
           <div className="topic-info">
             {
-              topic_detail ?
-                <div>
+              topic_detail
+              ? <div>
                   <Card noHovering='false' title={
                     <div className="topic-header">
                       <div>
@@ -238,17 +238,17 @@ class TopicDetail extends Component {
                     <span className="info-item">{`作者 ${topic_detail.author.loginname} `}</span>
                     <span className="info-item">{`${topic_detail.visit_count} 次浏览`}</span>
                     <span className="info-item">{`来自 ${topic_detail.kind}`}</span>
-                    { auth.id === topic_detail.author_id &&
+                    {auth.id === topic_detail.author_id &&
                       <Tooltip title="删除该话题，不可撤销">
-                        <a style={{ marginLeft: '20px'}} onClick={() => this.deleteTopic(topic_detail.id)}>
-                          <Icon type="delete" style={{ fontSize: 18, color: '#000' }}/>
+                        <a style={{ marginLeft: '20px' }} onClick={() => this.deleteTopic(topic_detail.id)}>
+                          <Icon type="delete" style={{ fontSize: 18, color: '#000' }} />
                         </a>
                       </Tooltip>
                     }
-                    { auth.id === topic_detail.author_id &&
+                    {auth.id === topic_detail.author_id &&
                       <Tooltip title="编辑该话题">
-                        <a style={{ marginLeft: '20px'}} onClick={() => this.gotoEdit(topic_detail.id)}>
-                          <Icon type="edit" style={{ fontSize: 18, color: '#000' }}/>
+                        <a style={{ marginLeft: '20px' }} onClick={() => this.gotoEdit(topic_detail.id)}>
+                          <Icon type="edit" style={{ fontSize: 18, color: '#000' }} />
                         </a>
                       </Tooltip>
                     }
@@ -295,7 +295,7 @@ class TopicDetail extends Component {
                     <Button className="reply-btn" type="primary" loading={this.state.loading} onClick={() => this.commit(topic_detail.id)}>回复</Button>
                   </Card>
                 </div>
-                : <div>加载中...</div>
+                : <div>加载中...<Icon type="loading" /></div>
             }
           </div>
           <div className="article">
@@ -311,17 +311,18 @@ class TopicDetail extends Component {
                   getInfoStatus === 'NoData' ?
                     <div>用户已不存在</div>
                     :
-                    <div>加载中</div>
+                    <div>加载中...<Icon type="loading" /></div>
                 )
               }
             </Card>
             <Card title="无人回复的话题" className="no-reply-item" noHovering='false'>
               {
-                noReplyStatus === 'pending' ?
-                  <div>正在加载</div>
-                  :
-                  (noReplyTopic.length ?
-                    noReplyTopic.map(item => (
+                noReplyStatus === 'pending'
+                  ? <div className="loading">
+                      <Icon type="loading" style={{ fontSize: 35 }}/>
+                    </div>
+                  : (noReplyTopic.length
+                    ? noReplyTopic.map(item => (
                       <div className="no-reply-topic" key={item.id}><Link to={`/topics/${item.id}`}>{item.title}</Link></div>
                     ))
                     : <div className="no-reply-topic">没有相应的话题</div>
