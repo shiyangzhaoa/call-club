@@ -95,7 +95,6 @@ export const getTopics = (query = defaultQuery) => (dispatch) => {
       limit: postQuery.limit,
     });
   }).catch(err => {
-    console.log(err);
     dispatch({
       type: GET_TOPICS_FAILED,
       status: 'failed',
@@ -279,7 +278,6 @@ export const getTopicDetail = (id) => (dispatch) => {
       })
     }
   }).catch(err => {
-    console.log(err);
     if (err.response) {
       dispatch({
         type: GET_TOPIC_DETAIL_FAILED,
@@ -411,7 +409,6 @@ export const upReply = (reply_id) => (dispatch) => {
       throw new Error('错误');
     }
   }).catch(err => {
-    console.log(err,'33');
     if (err.response) {
       dispatch({
         type: UP_REPLY_FAILD,
