@@ -50,7 +50,7 @@ class UserInfo extends Component {
               <div>用户名：<span className="info-value">{info.loginname}</span></div>
               <div>邮箱：<span className="info-value">{info.email}</span></div>
               <div>注册时间：<span className="info-value">{creat_time}</span></div>
-              <div>个性签名：<span className="info-value info-signature">{`"${info.signature}"`}</span></div>
+              {info.signature && <div>个性签名：<span className="info-value info-signature">{`"${info.signature}"`}</span></div>}
               {info.web && (
                 <div>个人网站：<a className="info-value" href={info.web}>{info.web}</a></div>
               )}
