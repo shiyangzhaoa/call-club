@@ -77,6 +77,7 @@ class Register extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { registerStatus } = this.props;
 
     const formItemLayout = {
       labelCol: {
@@ -211,7 +212,7 @@ class Register extends Component {
                 )}
             </FormItem>
             <FormItem {...tailFormItemLayout}>
-              <Button type="primary" htmlType="submit">注册</Button>
+              <Button type="primary" htmlType="submit" loading={registerStatus === 'pending'}>注册</Button>
             </FormItem>
           </Form>
         </div>

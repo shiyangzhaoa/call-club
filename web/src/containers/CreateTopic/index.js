@@ -123,7 +123,7 @@ class CreateTopic extends Component {
       },
     };
     const { getFieldDecorator } = this.props.form;
-    const { topic_detail } = this.props;
+    const { topic_detail, createTopicStatus } = this.props;
     const { topicId } = this.props.match.params;
     return (
       <div>
@@ -165,7 +165,7 @@ class CreateTopic extends Component {
             value={this.state.text}
             onChange={this.handleChange} />
           <FormItem style={{ margin: '20px 40px' }}>
-            <Button type="primary" htmlType="submit">提交</Button>
+            <Button loading={createTopicStatus === 'pending'} type="primary" htmlType="submit">提交</Button>
           </FormItem>
         </Form>
       </div>

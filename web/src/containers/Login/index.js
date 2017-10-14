@@ -73,6 +73,7 @@ class Login extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { loginStatus } = this.props;
     return (
       <div>
         <Header backTo='/' back='首页' now='登陆'/>
@@ -98,7 +99,7 @@ class Login extends React.Component {
                 <div>
                   <a className="login-form-forgot" onClick={this.forgot}>Forgot password</a>
                 </div>
-                <Button type="primary" htmlType="submit" className="login-form-button">
+                <Button type="primary" htmlType="submit" className="login-form-button" loading={loginStatus === 'pending'}>
                   登陆
                 </Button>
               </div>
