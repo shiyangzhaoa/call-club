@@ -53,6 +53,8 @@ class NavBar extends Component {
         break;
       case 'signout':
         localStorage.removeItem('login_token');
+        const { actions } = this.props;
+        actions.userExit();
         this.props.history.push("/");
         this.setState({
           hasLogin: false,

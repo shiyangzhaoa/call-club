@@ -65,6 +65,7 @@ import {
   UPDATE_TOPIC_SUCCESS,
   UPDATE_TOPIC_FAILED,
   INIT_TOPIC_DETAIL,
+  INIT_USER_INFO,
 } from './../apis';
 
 const url = '/api';
@@ -165,6 +166,13 @@ export const login = (query) => (dispatch) => {
       });
     }
   });
+}
+
+//用户退出
+export const userExit = () => (dispatch) => {
+  dispatch({
+    type: INIT_USER_INFO,
+  })
 }
 
 //获取用户信息
