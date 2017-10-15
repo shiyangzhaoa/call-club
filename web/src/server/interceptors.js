@@ -1,4 +1,8 @@
 import axios from 'axios';
+import createHistory from 'history/createHashHistory';
+
+const history = createHistory()
+
 //如果有token就在请求头里面带上
 axios.interceptors.request.use(function (config) {
   const token = localStorage.getItem('login_token');
@@ -12,19 +16,12 @@ axios.interceptors.request.use(function (config) {
 
 //对登陆过期做处理
 axios.interceptors.response.use(function (response) {
-  const { errCode } = response.data;
-  if (errCode && errCode === 100) {
-    localStorage.removeItem('login_token');
-    window.location.href = '/'
-  } else {
-    return response;
-  }
   return response;
 }, function (error) {
   const { errCode } = error.response.data;
   if (errCode && errCode === 100) {
     localStorage.removeItem('login_token');
-    window.location.href = '/login';
+    history.push('/login');
   } else {
     return Promise.reject(error);
   }

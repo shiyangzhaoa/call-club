@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+
 import 'antd/dist/antd.css';
 import 'github-markdown-css';
 import 'react-quill/dist/quill.snow.css';
 import './style/animation.scss';
-
 import './style/global.scss';
 import './server/interceptors';
 import AppRouter from './routers';
