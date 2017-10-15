@@ -163,7 +163,9 @@ class CreateTopic extends Component {
             modules={modules}
             formats={formats}
             value={this.state.text}
-            onChange={this.handleChange} />
+            onChange={this.handleChange}
+            placeholder='不要发表无关言论'
+          />
           <FormItem style={{ margin: '20px 40px' }}>
             <Button loading={createTopicStatus === 'pending'} type="primary" htmlType="submit">提交</Button>
           </FormItem>

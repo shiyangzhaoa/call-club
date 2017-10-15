@@ -58,7 +58,7 @@ class Setting extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { auth } = this.props;
+    const { auth, updateStatus } = this.props;
     return (
       <Form onSubmit={this.saveSetting} className="setting-form">
         <FormItem
@@ -114,7 +114,7 @@ class Setting extends React.Component {
           )}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">保存设置</Button>
+          <Button type="primary" htmlType="submit" loading={updateStatus === 'pending'}>保存设置</Button>
         </FormItem>
       </Form>
     );
@@ -171,6 +171,7 @@ class Pass extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { changeStatus } = this.props;
     return (
       <Form onSubmit={this.changePass} className="setting-form">
         <FormItem
@@ -204,7 +205,7 @@ class Pass extends React.Component {
           )}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">更改密码</Button>
+          <Button type="primary" htmlType="submit" loading={changeStatus === 'pending'}>更改密码</Button>
         </FormItem>
       </Form>
     );

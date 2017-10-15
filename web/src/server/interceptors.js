@@ -19,6 +19,13 @@ axios.interceptors.response.use(function (response) {
   } else {
     return response;
   }
+  return response;
 }, function (error) {
-  return Promise.reject(error);
+  const { errCode } = error.response.data;
+  if (errCode && errCode === 100) {
+    localStorage.removeItem('login_token');
+    window.location.href = '/login';
+  } else {
+    return Promise.reject(error);
+  }
 });
