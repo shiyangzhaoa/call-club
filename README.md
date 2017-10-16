@@ -1,5 +1,5 @@
 # call-club
-前端：react、redux和react router，后端：koa2，数据库：mongodb
+前端：react、redux和react router，默认占用3000，后端：koa2，数据库：mongodb，默认占用8080
 
 cd web => npm install => npm start
 ****
