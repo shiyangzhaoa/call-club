@@ -22,7 +22,6 @@ axios.interceptors.response.use(function (response) {
   if (errCode && errCode === 100) {
     localStorage.removeItem('login_token');
     history.push('/login');
-  } else {
-    return Promise.reject(error);
   }
+  return Promise.reject(error);
 });

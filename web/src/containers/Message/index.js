@@ -16,6 +16,7 @@ class Message extends Component {
     const { actions, markAllStatus, markOneStatus } = nextProps;
     if (markAllStatus !== this.props.markAllStatus && markAllStatus === 'succ') {
       actions.getMessages();
+      actions.getMessageCount();
     }
     if (markOneStatus !== this.props.markOneStatus && markOneStatus === 'succ') {
       actions.getMessages();
@@ -68,18 +69,19 @@ class Message extends Component {
           </Card>
           <Card className="info-card" noHovering='false' title="过往消息">
             <ul>
-              {has_read_messages ?
-                (has_read_messages.length ? has_read_messages.map(item => (
-                  <li key={item.id} className="message-item">
-                    {
-                      item.type === 'comment' ?
-                        <div>
-                          <span>有人在你发表的<a className="topic-link" onClick={() => this.readMessage(item.topic.id)}>{item.topic.title || '（文章已经删除）'}</a>中评论了你</span>
-                        </div>
-                        : <div>有人在文章<a className="topic-link" onClick={() => this.readMessage(item.topic.id)}>{item.topic.title || '（文章已经删除）'}</a>中@了你</div>
-                    }
-                  </li>
-                ))
+              {has_read_messages
+                ? (has_read_messages.length
+                  ? has_read_messages.map(item => (
+                      <li key={item.id} className="message-item">
+                        {
+                          item.type === 'comment'
+                          ? <div>
+                              <span>有人在你发表的<a className="topic-link" onClick={() => this.readMessage(item.topic.id)}>{item.topic.title || '（文章已经删除）'}</a>中评论了你</span>
+                            </div>
+                          : <div>有人在文章<a className="topic-link" onClick={() => this.readMessage(item.topic.id)}>{item.topic.title || '（文章已经删除）'}</a>中@了你</div>
+                        }
+                      </li>
+                    ))
                   : <li className="message-item">暂无消息</li>)
                 : <li className="message-item">正在加载...</li>
               }

@@ -126,7 +126,7 @@ const messageCtrl = {
     const query = {
       '$or': [
         { 'reply_id': ObjectId(author_id) },
-        { 'author_id': ObjectId(author_id) },
+        { 'topic_author_id': ObjectId(author_id) },
       ],
     }
     try {
