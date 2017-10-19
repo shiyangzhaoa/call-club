@@ -1,5 +1,5 @@
 # call-club
-前端：react、redux和react router，默认占用3000，后端：koa2，数据库：mongodb，默认占用8080;
+前端：react、redux和react router，默认占用3000，后端：koa2，数据库：mongodb，要求node8.0以上，默认占用8080;
 后端部署到了heroku，已经对跨域做了处理。接口地址：https://call-club.herokuapp.com/api;
 ****
 [线上地址](https://shiyangzhaoa.github.io/call-club-web/#/)
